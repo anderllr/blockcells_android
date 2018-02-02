@@ -1,0 +1,87 @@
+<resources>
+    <string name="app_name">BlockCells</string>
+
+    <!-- Strings related to activity titles -->
+    <string name="telaConfiguracao">BlockCells [Configuração]</string>
+    <string name="telaConfigGeral">BlockCells [Config.Geral]</string>
+    <string name="telaKilometragem">BlockCells [KM]</string>
+    <string name="telaHorario">BlockCells [Privacidade]</string>
+    <string name="telaMensagem">BlockCells [Mensagem]</string>
+    <string name="telaContatos">BlockCells [Exceção]</string>
+    <string name="telaLogGeral">BlockCells [Log]</string>
+
+    <string name="btnTravar">Travar</string>
+    <string name="btnDestravar">Destravar</string>
+    <string name="msgAlertaTrava">Tem certeza que quer destravar? Essa ação será MONITORADA e funcionará apenas na próxima ligação!</string>
+    <string name="alertYes">Sim</string>
+    <string name="alertNo">Não</string>
+
+    <string name="ConfigGeral_PermiteControle">Permite Controle Remoto?</string>
+    <string name="ConfigGeral_InformaLocalizacao">Permite Informar Localização?</string>
+    <string name="ConfigGeral_AplicativoAtivado">Aplicativo Ativado?</string>
+    <string name="ConfigGeral_EnviaSMS">Envia SMS ao Bloquear?</string>
+    <string name="clicouMenu">Foi clicado no menu...</string>
+    <string name="configGeral">Configurações</string>
+    <string name="configRetorno">Mensagem de Retorno</string>
+    <string name="configKm">Kilometragem</string>
+    <string name="configHorario">Horário e Dias</string>
+    <string name="configContatos">Contatos VIP</string>
+    <string name="configLog">Log de ações</string>
+    <string name="configControle">Controle Remoto</string>
+    <string name="configWelcome">Abertura</string>
+    <string name="kmMinino">Velocidade mínima KM/H</string>
+    <string name="kmMaximo">Velocidade máxima p/ controle</string>
+    <string name="kmBip">Emitir bip ao exceder velocidade?</string>
+    <string name="kmExcesso">Enviar alerta de excesso para o controle?</string>
+    <string name="title_activity_act_principal">Principal</string>
+
+    <string name="navigation_drawer_open">Abrir aba de navegação</string>
+    <string name="navigation_drawer_close">Fechar aba de navegação</string>
+    <string name="navigation_drawer_divisor">Opcional</string>
+
+    <string name="action_settings">Configurações</string>
+    <string name="action_salvar">Salvo</string>
+    <string name="action_sair">Saindo sem salvar</string>
+
+    <string name="lblMensagemRetorno">Mensagem</string>
+    <string name="txtMensagemRetorno">Informe a mensagem de retorno</string>
+    <string name="lblMensagemRetornoVIP">Mensagem-Contatos de Exceção</string>
+    <string name="txtMensagemRetornoVIP">Informe a mensagem de retorno para os contatos de exceção</string>
+    <string name="chkLocalizacao">Envia Localização</string>
+    <string name="txtOrientaLocaliza">Será enviado um SMS adicional com o link</string>
+    <string name="lblControle">Solicitação de Controle Remoto</string>
+    <string name="lblInfoControle">A pessoa abaixo está solicitando controle remoto ao seu dispositivo:</string>
+    <string name="lblAvisoControle">Se você aceitar o controle todas as funcionalidades só poderão ser alteradas remotamente pelo controlador</string>
+    <string name="lblBtnControle">Aceitar Controle</string>
+
+    <string name="lblDiasUteis">Dias úteis</string>
+    <string name="lblWeekends">Finais de semana</string>
+    <string name="lblMonday">Segunda</string>
+    <string name="lblTuesday">Terça</string>
+    <string name="lblWedsneday">Quarta</string>
+    <string name="lblThursday">Quinta</string>
+    <string name="lblFriday">Sexta</string>
+    <string name="lblSaturday">Sábado</string>
+    <string name="lblSunday">Domingo</string>
+    <string name="lblHourFrom">Horário de</string>
+    <string name="lblTo">Até</string>
+
+    <!-- Strings for components Settings -->
+    <string name="descTitleTimePicker">Selecione a Hora</string>
+
+    <string name="alertContacts">São permitidos apenas 3 (três) contatos de exceção!</string>
+
+    <string name="msgBlockCall">Bloqueio de Ligação</string>
+    <string name="msgBlockCallNumber">Número: </string>
+    <string name="msgDefaultSMS">Em trânsito, celular é bloqueado app Blockcells, ao parar retornarei!</string>
+    <string name="msgDefaultSMSVIP">Celular bloqueado (Blockcells) se URGENTE ligue novamente retornarei!</string>
+
+    <!-- Strings for welcome Sliders -->
+    <string name="title_activity_welcome">Home Screen</string>
+    <string name="next">PRÓXIMO</string>
+    <string name="skip">SAIR</string>
+    <string name="start">ENTRAR</string>
+    <string name="textSlider1">Este menu deve ser utilizado para configurar o aplicativo, preencha o máximo de informações</string>
+    <string name="textSlider2">Aqui informa a velocidade que você está quando em movimento</string>
+    <string name="textSlider3">Aqui você insere os contatos</string>
+</resources>

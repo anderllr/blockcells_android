@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="br.com.blockcells.blockcells.ActContatosExcecao"
+    android:background="@drawable/backmarcadagua">
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/lista_contatos"></ListView>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/novo_contato"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="@dimen/fab_margin" />
+
+        <TextView
+            android:id="@+id/txt_speed"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="+"
+            android:textSize="36dp"
+            android:elevation="6dp"
+            android:textColor="#fff"
+            app:layout_anchor="@id/novo_contato"
+            app:layout_anchorGravity="center"/>
+
+</android.support.design.widget.CoordinatorLayout>

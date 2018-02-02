@@ -1,0 +1,155 @@
+package br.com.blockcells.blockcells;
+
+import android.content.ContentUris;
+import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.provider.ContactsContract;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.view.ContextMenu;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.ListView;
+import android.widget.Toast;
+
+import java.io.InputStream;
+import java.util.List;
+
+import br.com.blockcells.blockcells.adapter.ContatosAdapter;
+import br.com.blockcells.blockcells.dao.ContatosExcecaoDAO;
+import br.com.blockcells.blockcells.modelo.ContatosExcecao;
+
+public class ActContatosExcecao extends AppCompatActivity {
+
+    private ListView listaContatos;
+    public final int PICK_CONTACT = 2017;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_contatos_excecao);
+
+        listaContatos = (ListView) findViewById(R.id.lista_contatos);
+
+ /*       listaContatos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> lista, View item, int position, long l) {
+                Aluno aluno = (Aluno) listaAlunos.getItemAtPosition(position);
+                //Toast.makeText(ListaAlunosActivity.this, "Aluno: " + aluno.getNome(), Toast.LENGTH_SHORT).show();
+                Intent intentVaiParaFormulario = new Intent(ListaAlunosActivity.this, FormularioActivity.class);
+                intentVaiParaFormulario.putExtra("aluno", aluno);
+                startActivity(intentVaiParaFormulario);
+            }
+        });
+*/
+
+        FloatingActionButton novo_contato = (FloatingActionButton) findViewById(R.id.novo_contato);
+        novo_contato.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //AQUI VAI ABRIR A LISTA DE CONTATOS SE HOUVER MENOS QUE 3
+                if (listaContatos.getCount() < 3) {
+                    Intent i = new Intent(Intent.ACTION_PICK, ContactsContract.CommonDataKinds.Phone.CONTENT_URI);
+                    startActivityForResult(i, PICK_CONTACT);
+                }
+                else
+                {
+                    Snackbar.make(view, getString(R.string.alertContacts), Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                }
+
+            }
+        });
+
+     //   registerForContextMenu(listaContatos);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == PICK_CONTACT && resultCode == RESULT_OK) {
+            Uri contactUri = data.getData();
+            Cursor cursor = getContentResolver().query(contactUri, null, null, null, null);
+            cursor.moveToFirst();
+            int cNumber = cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER);
+            int cName = cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME);
+            int cN = cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NORMALIZED_NUMBER);
+            String photo = ContactsContract.Contacts.Photo.PHOTO_THUMBNAIL_URI;
+
+            String id = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts._ID));
+
+            Bitmap b = getFoto(id);
+
+
+            //After get contact insert in list
+            ContatosExcecao ce = new ContatosExcecao();
+            ce.setNome(cursor.getString(cName));
+            ce.setFone(cursor.getString(cNumber));
+            ce.setFoneNormalize(cursor.getString(cN));
+            ce.setFoto(b);
+
+            ContatosExcecaoDAO cDao = new ContatosExcecaoDAO(this);
+            cDao.insere(ce);
+
+            carregaLista();
+        }
+    }
+
+
+    // Retorna a Foto do contato
+    public Bitmap getFoto(String id) {
+        Uri uri = ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI, Long.valueOf(id));
+
+        InputStream input = ContactsContract.Contacts.openContactPhotoInputStream(getContentResolver(), uri);
+
+        if (input == null) {
+            return null;
+        }
+        else
+          return BitmapFactory.decodeStream(input);
+    }
+
+    private void carregaLista() {
+        ContatosExcecaoDAO dao = new ContatosExcecaoDAO(this);
+        List<ContatosExcecao> alunos = dao.buscaContatosExcecao();
+        dao.close();
+
+        ContatosAdapter adapter = new ContatosAdapter(this, alunos);
+        listaContatos.setAdapter(adapter);
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        carregaLista();
+    }
+
+    //Agora sobrescreve o método para utilizar o menu criado no xml
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        //infla ele
+        getMenuInflater().inflate(R.menu.menu_voltar, menu);
+
+        return true;
+    }
+
+    //Para ter o comportamento do clique sobrescreve o método abaixo
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.menu_voltar:
+                finish();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+
+}

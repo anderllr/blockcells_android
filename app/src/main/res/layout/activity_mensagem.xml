@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    tools:context="br.com.blockcells.blockcells.ActMensagem"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    android:background="@drawable/backmarcadagua">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:orientation="vertical">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+        android:text="@string/lblMensagemRetorno"
+        android:layout_marginTop="32dp" />
+    <EditText
+        android:id="@+id/mensagem_mensagem"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/txtMensagemRetorno"
+        android:maxLength="70"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+            android:text="@string/lblMensagemRetornoVIP"
+            android:layout_marginTop="32dp" />
+        <EditText
+            android:id="@+id/mensagem_mensagemVIP"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:maxLength="70"
+            android:hint="@string/txtMensagemRetornoVIP"/>
+    </LinearLayout>
+    <CheckBox
+        android:id="@+id/mensagem_localizacao"
+        android:text="@string/chkLocalizacao"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:checked="true" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/txtOrientaLocaliza"
+        android:textStyle="normal"
+        android:textSize="16dp"
+        android:paddingLeft="22dp"/>
+
+
+</LinearLayout>

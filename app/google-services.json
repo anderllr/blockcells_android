@@ -1,0 +1,62 @@
+{
+  "project_info": {
+    "project_number": "748148947846",
+    "firebase_url": "https://blockcells.firebaseio.com",
+    "project_id": "blockcells",
+    "storage_bucket": "blockcells.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:748148947846:android:2a2c3c3a6815cc3c",
+        "android_client_info": {
+          "package_name": "br.com.blockcells.blockcells"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "748148947846-1vasoj8duvsugo3b1mcc0hdrhf2to58s.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "br.com.blockcells.blockcells",
+            "certificate_hash": "9c5535ae62bb8240757a122c7180cd1277e153c6"
+          }
+        },
+        {
+          "client_id": "748148947846-uh0qqfv1qetscrdmkc6m9b84ea6sabsv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDczIi_UDX6eryQUCC3WHpSFBD0VK4pjQ8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "748148947846-uh0qqfv1qetscrdmkc6m9b84ea6sabsv.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "748148947846-u34msqkdq6dbc8vbcbhpnl2007d0sofg.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "br.com.blockcells.BlockCells"
+              }
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

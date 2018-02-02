@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="none">
+        <item
+            android:id="@+id/chamaConfig"
+            android:icon="@drawable/ic_configuracao"
+            android:title="@string/configGeral" />
+        <item
+            android:id="@+id/chamaMensagem"
+            android:icon="@drawable/ic_message"
+            android:title="@string/configRetorno" />
+        <item
+            android:id="@+id/chamaKm"
+            android:icon="@drawable/ic_localizacao"
+            android:title="@string/configKm" />
+        <item
+            android:id="@+id/chamaHorario"
+            android:icon="@drawable/ic_informacao"
+            android:title="@string/configHorario" />
+        <item
+            android:id="@+id/chamaContatos"
+            android:icon="@drawable/ic_contatos"
+            android:title="@string/configContatos" />
+        <item
+            android:id="@+id/chamaLog"
+            android:icon="@drawable/ic_log"
+            android:title="@string/configLog" />
+
+        <item
+            android:id="@+id/chamaJustificativa"
+            android:icon="@drawable/ic_justificativa"
+            android:title="@string/configJustificativa" />
+    </group>
+
+    <item android:title="@string/navigation_drawer_divisor">
+        <menu>
+
+            <item
+                android:id="@+id/chamaControle"
+                android:icon="@drawable/ic_usuario"
+                android:title="@string/configControle" />
+
+            <item
+                android:id="@+id/chamaWelcome"
+                android:icon="@drawable/ic_informacao"
+                android:title="@string/configWelcome" />
+
+        </menu>
+    </item>
+
+</menu>

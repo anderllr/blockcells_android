@@ -1,0 +1,26 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/bg_screen">
+
+    <ImageView
+        android:id="@+id/imgSlider2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="fitXY"
+        android:src="@drawable/slider2" />
+
+    <TextView
+        android:id="@+id/ImageViewText"
+        android:layout_width="160sp"
+        android:layout_height="330sp"
+
+
+        android:text="@string/textSlider2"
+        android:gravity="right"
+        android:paddingLeft="50dp"
+        android:paddingTop="70dp"
+        android:textSize="20sp"
+        android:layout_alignParentBottom="true" />
+</RelativeLayout>
