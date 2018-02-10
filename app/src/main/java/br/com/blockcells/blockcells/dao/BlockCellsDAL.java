@@ -12,7 +12,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class BlockCellsDAL extends SQLiteOpenHelper {
     public BlockCellsDAL(Context context) {
-        super(context, "BlockCells", null, 4);
+        super(context, "BlockCells", null, 1);
     }
 
     @Override
@@ -39,7 +39,7 @@ public class BlockCellsDAL extends SQLiteOpenHelper {
 
         sqLiteDatabase.execSQL(sql);
 
-        sql = "CREATE TABLE ContatosExcecao (id INTEGER PRIMARY KEY, nome TEXT, fone TEXT, foto BLOB, foneNormalize TEXT);";
+        sql = "CREATE TABLE ContatosExcecao (id INTEGER, nome TEXT, fone TEXT, foto BLOB, foneNormalize TEXT);";
         sqLiteDatabase.execSQL(sql);
 
         sql = "CREATE TABLE LogGeral (id INTEGER PRIMARY KEY, topico TEXT, ocorrencia TEXT, dataHora TEXT, latitude REAL, longitude REAL);";
@@ -56,7 +56,7 @@ public class BlockCellsDAL extends SQLiteOpenHelper {
       //  String sql = "DROP TABLE ConfigGeral";
       //  sqLiteDatabase.execSQL(sql);
 
-        String sql = "";
+/*        String sql = "";
         switch (oldVersion ){
             case 1 :
                 sql = "CREATE TABLE Horario (id INTEGER PRIMARY KEY, usefulMonday INTEGER, usefulTuesday INTEGER, usefulWednesday INTEGER, " +
@@ -73,7 +73,7 @@ public class BlockCellsDAL extends SQLiteOpenHelper {
                 sqLiteDatabase.execSQL(sql);
                 sql = "ALTER TABLE LogGeral ADD longitude REAL";
                 sqLiteDatabase.execSQL(sql);
-          }
+          }*/
 
     }
 
@@ -94,10 +94,32 @@ public class BlockCellsDAL extends SQLiteOpenHelper {
 
     }
 
+    public Long buscaMax(String tab, String campo) {
+        SQLiteDatabase db = getReadableDatabase();
+        String sql = String.format("SELECT MAX(%s) maximo FROM %s", campo, tab);
+        Cursor c = db.rawQuery(sql, null);
+        Long max = Long.valueOf(1);
+
+        c.moveToFirst();
+
+        if (c.getCount() > 0) {
+            max += c.getLong(c.getColumnIndex("maximo"));;
+            c.close();
+        }
+        return max;
+    }
+
     public void deletaID(String tabela, String [] params) {
         SQLiteDatabase db = getWritableDatabase();
 
         db.delete(tabela, "id = ?", params);
+
+    }
+
+    public void deletaAll(String tabela) {
+        SQLiteDatabase db = getWritableDatabase();
+
+        db.delete(tabela, "", null);
 
     }
 

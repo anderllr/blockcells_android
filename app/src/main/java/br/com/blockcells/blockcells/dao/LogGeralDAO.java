@@ -40,8 +40,8 @@ public class LogGeralDAO {
     @NonNull
     private ContentValues getContentValues(LogGeral logGeral) {
         ContentValues dados = new ContentValues();
-        dados.put("topico", logGeral.getTopico());
-        dados.put("ocorrencia", logGeral.getOcorrencia());
+        dados.put("topico", logGeral.getEvento());
+        dados.put("ocorrencia", logGeral.getDescricao());
         dados.put("dataHora", getDateTime());
         dados.put("latitude", logGeral.getLatitude());
         dados.put("longitude", logGeral.getLongitude());
@@ -60,9 +60,9 @@ public class LogGeralDAO {
         while (c.moveToNext()){
             LogGeral loggeral = new LogGeral();
             loggeral.setId(c.getLong(c.getColumnIndex("id")));
-            loggeral.setTopico(c.getString(c.getColumnIndex("topico")));
-            loggeral.setOcorrencia(c.getString(c.getColumnIndex("ocorrencia")));
-            loggeral.setDataHora(c.getString(c.getColumnIndex("dataHora")));
+            loggeral.setEvento(c.getString(c.getColumnIndex("topico")));
+            loggeral.setDescricao(c.getString(c.getColumnIndex("ocorrencia")));
+            loggeral.setData_hora(c.getString(c.getColumnIndex("dataHora")));
             loggeral.setLatitude(c.getDouble(c.getColumnIndex("latitude")));
             loggeral.setLongitude(c.getDouble(c.getColumnIndex("longitude")));
             //Agora adiciona na lista
@@ -99,22 +99,26 @@ public class LogGeralDAO {
 
     private String getDateTime() {
         SimpleDateFormat dateFormat = new SimpleDateFormat(
-                "yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+                "dd/MM/yyyy HH:mm:ss", Locale.getDefault());
         Date date = new Date();
         return dateFormat.format(date);
     }
 
-    public void insereLog (String topico, String ocorrencia, Double latitude, Double longitude){
+    public void insereLog (String evento, String descricao, Double latitude, Double longitude){
         LogGeral loggeral = new LogGeral();
-        loggeral.setTopico(topico);
-        loggeral.setOcorrencia(ocorrencia);
+        loggeral.setEvento(evento);
+        loggeral.setDescricao(descricao);
         loggeral.setLatitude(latitude);
         loggeral.setLongitude(longitude);
-        insere(loggeral);
+        loggeral.setData_hora(getDateTime());
+
+        BlockCellsFire fire = new BlockCellsFire(context);
+        fire.salvaLog(loggeral);
+    //    insere(loggeral);
 
         JustificativaDAO jDao = new JustificativaDAO(this.context);
         String[] eventos = {"Excesso de Velocidade", "Efetuou Ligação", "Atendeu Ligação"};
-        if (Arrays.asList(eventos).contains(loggeral.getTopico())) {
+        if (Arrays.asList(eventos).contains(loggeral.getEvento())) {
             jDao.insereJustificativa(loggeral, latitude, longitude);
         }
     }

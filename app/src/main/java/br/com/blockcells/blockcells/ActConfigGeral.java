@@ -7,6 +7,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import br.com.blockcells.blockcells.dao.BlockCellsFire;
 import br.com.blockcells.blockcells.dao.ConfigGeralDAO;
 import br.com.blockcells.blockcells.modelo.ConfigGeral;
 
@@ -47,14 +51,12 @@ public class ActConfigGeral extends AppCompatActivity {
                 ConfigGeral configGeral = helper.pegaConfigGeral();
                 ConfigGeralDAO dao = new ConfigGeralDAO(this);
 
-                if (configGeral.getId() != null) {
-                    //significa que está alterando
+                //Save on firebase
+                BlockCellsFire fire = new BlockCellsFire(getApplicationContext());
+                fire.salvaFirebase(configGeral, "config_geral");
 
-                    dao.altera(configGeral);
-                }
-                else {
-                    dao.insere(configGeral);
-                }
+                //Here is always update because the table is started in ActPrincipal on function StartDatabase
+                dao.altera(configGeral);
                 dao.close();
 
                 Toast.makeText(this, getString(R.string.action_salvar), Toast.LENGTH_SHORT).show();

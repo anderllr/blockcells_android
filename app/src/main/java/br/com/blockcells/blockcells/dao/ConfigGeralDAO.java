@@ -31,10 +31,10 @@ public class ConfigGeralDAO {
     @NonNull
     private ContentValues getContentValues(ConfigGeral configGeral) {
         ContentValues dados = new ContentValues();
-        dados.put("controleRemoto", configGeral.getControleRemoto());
-        dados.put("informaLocal", configGeral.getInformaLocal());
+        dados.put("controleRemoto", configGeral.getControle_remoto());
+        dados.put("informaLocal", configGeral.getInforma_local());
         dados.put("ativado", configGeral.getAtivado());
-        dados.put("enviasms", configGeral.isEnviasms());
+        dados.put("enviasms", configGeral.isEnvia_sms());
         return dados;
     }
 
@@ -51,11 +51,10 @@ public class ConfigGeralDAO {
 
         if (c.getCount() > 0) {
             ConfigGeral configGeral = new ConfigGeral();
-            configGeral.setId(c.getLong(c.getColumnIndex("id")));
-            configGeral.setControleRemoto(c.getInt(c.getColumnIndex("controleRemoto")) == 1);
-            configGeral.setInformaLocal(c.getInt(c.getColumnIndex("informaLocal")) == 1);
+            configGeral.setControle_remoto(c.getInt(c.getColumnIndex("controleRemoto")) == 1);
+            configGeral.setInforma_local(c.getInt(c.getColumnIndex("informaLocal")) == 1);
             configGeral.setAtivado(c.getInt(c.getColumnIndex("ativado")) == 1);
-            configGeral.setEnviasms(c.getInt(c.getColumnIndex("enviasms")) == 1);
+            configGeral.setEnvia_sms(c.getInt(c.getColumnIndex("enviasms")) == 1);
             c.close();
             return configGeral;
         }
@@ -65,8 +64,8 @@ public class ConfigGeralDAO {
 
     public void deleta(ConfigGeral configGeral) {
 
-        String[] params = {configGeral.getId().toString()};
-
+       // String[] params = {configGeral.getId().toString()};
+        String[] params = {"1"};
         dal.deletaID("ConfigGeral", params);
 
         //dal.close();
@@ -76,7 +75,8 @@ public class ConfigGeralDAO {
 
         ContentValues dados = getContentValues(configGeral);
 
-        String[] params = {configGeral.getId().toString()};
+     //   String[] params = {configGeral.getId().toString()};
+        String[] params = {"1"};
         dal.alteraID("ConfigGeral", dados, params);
 
         //dal.close();
@@ -86,9 +86,9 @@ public class ConfigGeralDAO {
         //No caso dessa tela de configuração sempre iniciará com um registro e ele sempre será editado
         ConfigGeral configGeral = new ConfigGeral();
         configGeral.setAtivado(false);
-        configGeral.setControleRemoto(false);
-        configGeral.setInformaLocal(false);
-        configGeral.setEnviasms(false);
+        configGeral.setControle_remoto(false);
+        configGeral.setInforma_local(false);
+        configGeral.setEnvia_sms(false);
         this.insere(configGeral);
     }
 

@@ -7,6 +7,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import br.com.blockcells.blockcells.dao.BlockCellsFire;
 import br.com.blockcells.blockcells.dao.MensagemDAO;
 import br.com.blockcells.blockcells.modelo.Mensagem;
 
@@ -46,13 +47,11 @@ public class ActMensagem extends AppCompatActivity {
                 Mensagem mensagem = helper.pegaMensagem();
                 MensagemDAO dao = new MensagemDAO(this);
 
-                if (mensagem.getId() != null) {
-                    //significa que está alterando
-                    dao.altera(mensagem);
-                }
-                else {
-                    dao.insere(mensagem);
-                }
+                //Save on firebase
+                BlockCellsFire fire = new BlockCellsFire(getApplicationContext());
+                fire.salvaFirebase(mensagem, "mensagem_retorno");
+
+                dao.altera(mensagem);
                 dao.close();
                 finish();
                 break;

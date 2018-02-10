@@ -10,7 +10,6 @@ import android.widget.TextView;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -61,9 +60,17 @@ public class LogGeralAdapter  extends BaseAdapter {
         }
 
         //Converter a data e hora separadamente
-        String data = getDataHora(loggeral.getDataHora(), "D");
-        String hora = getDataHora(loggeral.getDataHora(), "H");
+ //       String data = getDataHora(loggeral.getData_hora(), "D");
+//        String hora = getDataHora(loggeral.getData_hora(), "H");
 
+        String data = "";
+        String hora = "";
+
+        if (loggeral.getData_hora() != null) {
+            String[] arrayData = loggeral.getData_hora().split(" ");
+            data = arrayData[0];
+            hora = arrayData[1];
+        }
         //Agora busca os campos para atribuir e deve buscar do xml de layout
         TextView campoData = (TextView) view.findViewById(R.id.log_data);
         campoData.setText(data);
@@ -72,10 +79,10 @@ public class LogGeralAdapter  extends BaseAdapter {
         campoHora.setText(hora);
 
         TextView campoTopico = (TextView) view.findViewById(R.id.log_topico);
-        campoTopico.setText(loggeral.getTopico());
+        campoTopico.setText(loggeral.getEvento());
 
         TextView campoOcorrencia = (TextView) view.findViewById(R.id.log_ocorrencia);
-        campoOcorrencia.setText(loggeral.getOcorrencia());
+        campoOcorrencia.setText(loggeral.getDescricao());
 
         return view;
     }
@@ -87,6 +94,7 @@ public class LogGeralAdapter  extends BaseAdapter {
 
             //Start conversion of Date Hour String
             DateFormat fDataHora = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+//            DateFormat fDataHora = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
 
             Date dateObject = null;
             try {

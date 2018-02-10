@@ -116,7 +116,7 @@ public class CALLReceiver extends BroadcastReceiver {
                 Log.i("MSG", "Vai verificar para enviar a mensagem...");
 
                 //Verify if app sends sms
-                if ((cfg.isEnviasms()) && (number.length() == 12)) {
+                if ((cfg.isEnvia_sms()) && (number.length() == 12)) {
 
                     String msgSMS = "";
 
@@ -130,9 +130,9 @@ public class CALLReceiver extends BroadcastReceiver {
                     //Send sms message
                     ContatosExcecaoDAO ce = new ContatosExcecaoDAO(context);
                     if (ce.isContatoExcecao(number)) {
-                        msgSMS = msg.getDescmensagemVIP();
+                        msgSMS = msg.getMsg_vip();
                     } else {
-                        msgSMS = msg.getMensagem();
+                        msgSMS = msg.getMsg();
                     }
                     //Now Send
                     SmsManager smsManager = SmsManager.getDefault();
@@ -140,7 +140,7 @@ public class CALLReceiver extends BroadcastReceiver {
 
                     Log.i("MSG", "Vai enviar a da localização...");
                     //Now verify about localization
-                    if (cfg.getInformaLocal() && msg.isLocalizacao()){
+                    if (cfg.getInforma_local() && msg.isMsgcomlocalizacao()){
                         String linkLoc = "http://maps.google.com/?q=" + String.valueOf(lat) + "," +
                                 String.valueOf(lon);
 

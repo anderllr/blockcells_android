@@ -7,40 +7,31 @@ import java.io.Serializable;
  */
 
 public class Mensagem implements Serializable {
-    private Long id;
-    private String descmensagem;
-    private String descmensagemVIP;
-    private boolean localizacao;
+    private String msg;
+    private String msg_vip;
+    private boolean msgcomlocalizacao;
 
-    public Long getId() {
-        return id;
+    public String getMsg() {
+        return msg;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setMsg(String descmensagem) {
+        this.msg = descmensagem;
     }
 
-    public String getMensagem() {
-        return descmensagem;
+    public String getMsg_vip() {
+        return msg_vip;
     }
 
-    public void setMensagem(String descmensagem) {
-        this.descmensagem = descmensagem;
+    public void setMsg_vip(String msg_vip) {
+        this.msg_vip = msg_vip;
     }
 
-    public String getDescmensagemVIP() {
-        return descmensagemVIP;
+    public boolean isMsgcomlocalizacao() {
+        return msgcomlocalizacao;
     }
 
-    public void setDescmensagemVIP(String descmensagemVIP) {
-        this.descmensagemVIP = descmensagemVIP;
-    }
-
-    public boolean isLocalizacao() {
-        return localizacao;
-    }
-
-    public void setLocalizacao(boolean localizacao) {
-        this.localizacao = localizacao;
+    public void setMsgcomlocalizacao(boolean msgcomlocalizacao) {
+        this.msgcomlocalizacao = msgcomlocalizacao;
     }
 }

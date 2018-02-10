@@ -6,15 +6,25 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
 import java.util.List;
 
 import br.com.blockcells.blockcells.adapter.LogGeralAdapter;
 import br.com.blockcells.blockcells.dao.LogGeralDAO;
+import br.com.blockcells.blockcells.funcs.GlobalSpeed;
 import br.com.blockcells.blockcells.modelo.LogGeral;
 
 public class ActLogGeral extends AppCompatActivity {
 
     private ListView listaLog;
+    private FirebaseDatabase database = FirebaseDatabase.getInstance();
+    private DatabaseReference myRef = database.getReference("celulares");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,12 +60,36 @@ public class ActLogGeral extends AppCompatActivity {
     }
 
     private void carregaLista() {
-        LogGeralDAO dao = new LogGeralDAO(this);
-        List<LogGeral> lista = dao.buscaLogGeral();
-        dao.close();
+//        LogGeralDAO dao = new LogGeralDAO(this);
+//        List<LogGeral> lista = dao.buscaLogGeral();
+//        dao.close();
+        final List<LogGeral> lista = new ArrayList<LogGeral>();
 
-        LogGeralAdapter adapter = new LogGeralAdapter(this, lista);
+        final LogGeralAdapter adapter = new LogGeralAdapter(this, lista);
         listaLog.setAdapter(adapter);
+
+        //Agora cria o listener que irá ler os logs
+        final GlobalSpeed globalSpeed = (GlobalSpeed) getApplicationContext();
+        DatabaseReference fireLog = myRef.child(globalSpeed.getTelefone()).child("log_eventos");
+
+        fireLog.limitToLast(30).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                lista.clear();
+
+                for (DataSnapshot dados: dataSnapshot.getChildren()) {
+                    LogGeral lg = dados.getValue(LogGeral.class);
+                    lista.add(lg);
+                }
+
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
     }
 }

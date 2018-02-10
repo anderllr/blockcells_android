@@ -26,18 +26,18 @@ public class ActConfigGeralHelper {
     }
 
     public ConfigGeral pegaConfigGeral() {
-        configGeral.setControleRemoto(campoControleRemoto.isChecked());
-        configGeral.setInformaLocal(campoInformaLocal.isChecked());
+        configGeral.setControle_remoto(campoControleRemoto.isChecked());
+        configGeral.setInforma_local(campoInformaLocal.isChecked());
         configGeral.setAtivado(campoAtivado.isChecked());
-        configGeral.setEnviasms(campoEnviasms.isChecked());
+        configGeral.setEnvia_sms(campoEnviasms.isChecked());
         return configGeral;
     }
 
     public void preencheConfigGeral(ConfigGeral configGeral) {
-        campoControleRemoto.setChecked(configGeral.getControleRemoto());
-        campoInformaLocal.setChecked(configGeral.getInformaLocal());
+        campoControleRemoto.setChecked(configGeral.getControle_remoto());
+        campoInformaLocal.setChecked(configGeral.getInforma_local());
         campoAtivado.setChecked(configGeral.getAtivado());
-        campoEnviasms.setChecked(configGeral.isEnviasms());
+        campoEnviasms.setChecked(configGeral.isEnvia_sms());
 
         this.configGeral = configGeral;
 

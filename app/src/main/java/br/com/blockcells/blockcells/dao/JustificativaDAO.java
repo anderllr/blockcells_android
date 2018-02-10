@@ -107,12 +107,15 @@ public class JustificativaDAO {
 
     public void insereJustificativa (LogGeral loggeral, double latitude, double longitude){
         Justificativa just = new Justificativa();
-        just.setData_hora(loggeral.getDataHora());
+        just.setData_hora(loggeral.getData_hora());
         just.setDesc_justificativa("");
-        just.setEvento(loggeral.getTopico());
+        just.setEvento(loggeral.getEvento());
         just.setJustificado(false);
         just.setLatitude(latitude);
         just.setLongitude(longitude);
-        insere(just);
+
+        BlockCellsFire fire = new BlockCellsFire(context);
+        fire.salvaJustificativa(just);
+ //       insere(just);
     }
 }

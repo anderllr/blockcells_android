@@ -7,6 +7,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import br.com.blockcells.blockcells.dao.BlockCellsFire;
 import br.com.blockcells.blockcells.dao.JustificativaDAO;
 import br.com.blockcells.blockcells.modelo.Justificativa;
 
@@ -45,20 +46,12 @@ public class ActJustificativa extends AppCompatActivity {
         switch (item.getItemId()){
             case R.id.menu_confirma:
                 Justificativa jus = helper.pegaJustificativa();
-                JustificativaDAO dao = new JustificativaDAO(this);
 
                 //Set justificado = true for mark as done
                 jus.setJustificado(true);
 
-                if (jus.getId() != null) {
-                    //significa que está alterando
-
-                    dao.altera(jus);
-                }
-                else {
-                    dao.insere(jus);
-                }
-                dao.close();
+                BlockCellsFire fire = new BlockCellsFire(getApplicationContext());
+                fire.salvaFirebaseChild(jus, "justificativa", String.valueOf(jus.getId()));
 
                 Toast.makeText(this, getString(R.string.action_salvar), Toast.LENGTH_SHORT).show();
                 finish();

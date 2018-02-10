@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import java.util.Calendar;
 
+import br.com.blockcells.blockcells.dao.BlockCellsFire;
 import br.com.blockcells.blockcells.dao.HorarioDAO;
 import br.com.blockcells.blockcells.modelo.Horario;
 
@@ -57,14 +58,11 @@ public class ActHorario extends AppCompatActivity {
                 Horario horario = helper.pegaHorario();
                 HorarioDAO dao = new HorarioDAO(this);
 
-                if (horario.getId() != null) {
-                    //significa que está alterando
+                //Save on firebase
+                BlockCellsFire fire = new BlockCellsFire(getApplicationContext());
+                fire.salvaFirebase(horario, "horario");
 
-                    dao.altera(horario);
-                }
-                else {
-                    dao.insere(horario);
-                }
+                dao.altera(horario);
                 dao.close();
                 Toast.makeText(this, getString(R.string.action_salvar), Toast.LENGTH_SHORT).show();
                 finish();

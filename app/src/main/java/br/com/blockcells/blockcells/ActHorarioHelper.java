@@ -1,16 +1,7 @@
 package br.com.blockcells.blockcells;
 
-import android.app.TimePickerDialog;
-import android.content.Context;
-import android.graphics.Color;
-import android.view.Gravity;
-import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.TimePicker;
-
-import java.util.Calendar;
 
 import br.com.blockcells.blockcells.funcs.DialogDateTime;
 import br.com.blockcells.blockcells.modelo.Horario;
@@ -62,32 +53,32 @@ public class ActHorarioHelper {
         if (horario == null) {
             horario = new Horario();
         }
-        horario.setUsefulMonday(campoMonday.isChecked());
-        horario.setUsefulTuesday(campoTuesday.isChecked());
-        horario.setUsefulWednesday(campoWednesday.isChecked());
-        horario.setUsefulThursday(campoThursday.isChecked());
-        horario.setUsefulFriday(campoFriday.isChecked());
-        horario.setHourUsefulStart(campoUsefulStart.getText().toString());
-        horario.setHourUsefulEnd(campoUsefulEnd.getText().toString());
-        horario.setWeekendSaturday(campoSaturday.isChecked());
-        horario.setWeekendSunday(campoSunday.isChecked());
-        horario.setHourWeekendStart(campoWeekendStart.getText().toString());
-        horario.setHourWeekendEnd(campoWeekendEnd.getText().toString());
+        horario.setSegunda(campoMonday.isChecked());
+        horario.setTerca(campoTuesday.isChecked());
+        horario.setQuarta(campoWednesday.isChecked());
+        horario.setQuinta(campoThursday.isChecked());
+        horario.setSexta(campoFriday.isChecked());
+        horario.setUtil_inicio(campoUsefulStart.getText().toString());
+        horario.setUtil_fim(campoUsefulEnd.getText().toString());
+        horario.setSabado(campoSaturday.isChecked());
+        horario.setDomingo(campoSunday.isChecked());
+        horario.setFds_inicio(campoWeekendStart.getText().toString());
+        horario.setFds_fim(campoWeekendEnd.getText().toString());
         return horario;
     }
 
     public void preencheHorario(Horario horario) {
-        campoMonday.setChecked(horario.isUsefulMonday());
-        campoTuesday.setChecked(horario.isUsefulTuesday());
-        campoWednesday.setChecked(horario.isUsefulWednesday());
-        campoThursday.setChecked(horario.isUsefulThursday());
-        campoFriday.setChecked(horario.isUsefulFriday());
-        campoUsefulStart.setText(horario.getHourUsefulStart());
-        campoUsefulEnd.setText(horario.getHourUsefulEnd());
-        campoSaturday.setChecked(horario.isWeekendSaturday());
-        campoSunday.setChecked(horario.isWeekendSunday());
-        campoWeekendStart.setText(horario.getHourWeekendStart());
-        campoWeekendEnd.setText(horario.getHourWeekendEnd());
+        campoMonday.setChecked(horario.isSegunda());
+        campoTuesday.setChecked(horario.isTerca());
+        campoWednesday.setChecked(horario.isQuarta());
+        campoThursday.setChecked(horario.isQuinta());
+        campoFriday.setChecked(horario.isSexta());
+        campoUsefulStart.setText(horario.getUtil_inicio());
+        campoUsefulEnd.setText(horario.getUtil_fim());
+        campoSaturday.setChecked(horario.isSabado());
+        campoSunday.setChecked(horario.isDomingo());
+        campoWeekendStart.setText(horario.getFds_inicio());
+        campoWeekendEnd.setText(horario.getFds_fim());
 
         this.horario = horario;
 

@@ -8,11 +8,20 @@ import java.io.Serializable;
 
 public class LogGeral implements Serializable {
     private Long id;
-    private String topico;
-    private String ocorrencia;
-    private String dataHora;
+    private String evento;
+    private String descricao;
+    private String data_hora;
     private double latitude;
     private double longitude;
+    private Boolean localizacao;
+
+    public Boolean getLocalizacao() {
+        return localizacao;
+    }
+
+    public void setLocalizacao(Boolean localizacao) {
+        this.localizacao = localizacao;
+    }
 
     public double getLatitude() {
         return latitude;
@@ -38,27 +47,27 @@ public class LogGeral implements Serializable {
         this.id = id;
     }
 
-    public String getTopico() {
-        return topico;
+    public String getEvento() {
+        return evento;
     }
 
-    public void setTopico(String topico) {
-        this.topico = topico;
+    public void setEvento(String evento) {
+        this.evento = evento;
     }
 
-    public String getOcorrencia() {
-        return ocorrencia;
+    public String getDescricao() {
+        return descricao;
     }
 
-    public void setOcorrencia(String ocorrencia) {
-        this.ocorrencia = ocorrencia;
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
     }
 
-    public String getDataHora() {
-        return dataHora;
+    public String getData_hora() {
+        return data_hora;
     }
 
-    public void setDataHora(String dataHora) {
-        this.dataHora = dataHora;
+    public void setData_hora(String data_hora) {
+        this.data_hora = data_hora;
     }
 }

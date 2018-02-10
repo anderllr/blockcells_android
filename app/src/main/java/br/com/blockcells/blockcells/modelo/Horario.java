@@ -7,112 +7,103 @@ import java.io.Serializable;
  */
 
 public class Horario implements Serializable {
-    private Long id;
-    private boolean usefulMonday;
-    private boolean usefulTuesday;
-    private boolean usefulWednesday;
-    private boolean usefulThursday;
-    private boolean usefulFriday;
-    private String hourUsefulStart;
-    private String hourUsefulEnd;
-    private boolean weekendSaturday;
-    private boolean weekendSunday;
-    private String hourWeekendStart;
-    private String hourWeekendEnd;
+    private boolean segunda;
+    private boolean terca;
+    private boolean quarta;
+    private boolean quinta;
+    private boolean sexta;
+    private String util_inicio;
+    private String util_fim;
+    private boolean sabado;
+    private boolean domingo;
+    private String fds_inicio;
+    private String fds_fim;
 
-    public Long getId() {
-        return id;
+    public boolean isSegunda() {
+        return segunda;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setSegunda(boolean segunda) {
+        this.segunda = segunda;
     }
 
-    public boolean isUsefulMonday() {
-        return usefulMonday;
+    public boolean isTerca() {
+        return terca;
     }
 
-    public void setUsefulMonday(boolean usefulMonday) {
-        this.usefulMonday = usefulMonday;
+    public void setTerca(boolean terca) {
+        this.terca = terca;
     }
 
-    public boolean isUsefulTuesday() {
-        return usefulTuesday;
+    public boolean isQuarta() {
+        return quarta;
     }
 
-    public void setUsefulTuesday(boolean usefulTuesday) {
-        this.usefulTuesday = usefulTuesday;
+    public void setQuarta(boolean quarta) {
+        this.quarta = quarta;
     }
 
-    public boolean isUsefulWednesday() {
-        return usefulWednesday;
+    public boolean isQuinta() {
+        return quinta;
     }
 
-    public void setUsefulWednesday(boolean usefulWednesday) {
-        this.usefulWednesday = usefulWednesday;
+    public void setQuinta(boolean quinta) {
+        this.quinta = quinta;
     }
 
-    public boolean isUsefulThursday() {
-        return usefulThursday;
+    public boolean isSexta() {
+        return sexta;
     }
 
-    public void setUsefulThursday(boolean usefulThursday) {
-        this.usefulThursday = usefulThursday;
+    public void setSexta(boolean sexta) {
+        this.sexta = sexta;
     }
 
-    public boolean isUsefulFriday() {
-        return usefulFriday;
+    public String getUtil_inicio() {
+        return util_inicio;
     }
 
-    public void setUsefulFriday(boolean usefulFriday) {
-        this.usefulFriday = usefulFriday;
+    public void setUtil_inicio(String util_inicio) {
+        this.util_inicio = util_inicio;
     }
 
-    public String getHourUsefulStart() {
-        return hourUsefulStart;
+    public String getUtil_fim() {
+        return util_fim;
     }
 
-    public void setHourUsefulStart(String hourUsefulStart) {
-        this.hourUsefulStart = hourUsefulStart;
+    public void setUtil_fim(String util_fim) {
+        this.util_fim = util_fim;
     }
 
-    public String getHourUsefulEnd() {
-        return hourUsefulEnd;
+    public boolean isSabado() {
+        return sabado;
     }
 
-    public void setHourUsefulEnd(String hourUsefulEnd) {
-        this.hourUsefulEnd = hourUsefulEnd;
+    public void setSabado(boolean sabado) {
+        this.sabado = sabado;
     }
 
-    public boolean isWeekendSaturday() {
-        return weekendSaturday;
+    public boolean isDomingo() {
+        return domingo;
     }
 
-    public void setWeekendSaturday(boolean weekendSaturday) {
-        this.weekendSaturday = weekendSaturday;
+    public void setDomingo(boolean domingo) {
+        this.domingo = domingo;
     }
 
-    public boolean isWeekendSunday() {
-        return weekendSunday;
+    public String getFds_inicio() {
+        return fds_inicio;
     }
 
-    public void setWeekendSunday(boolean weekendSunday) {
-        this.weekendSunday = weekendSunday;
+    public void setFds_inicio(String fds_inicio) {
+        this.fds_inicio = fds_inicio;
     }
 
-    public String getHourWeekendStart() {
-        return hourWeekendStart;
+    public String getFds_fim() {
+        return fds_fim;
     }
 
-    public void setHourWeekendStart(String hourWeekendStart) {
-        this.hourWeekendStart = hourWeekendStart;
-    }
-
-    public String getHourWeekendEnd() {
-        return hourWeekendEnd;
-    }
-
-    public void setHourWeekendEnd(String hourWeekendEnd) {
-        this.hourWeekendEnd = hourWeekendEnd;
+    public void setFds_fim(String fds_fim) {
+        this.fds_fim = fds_fim;
     }
 }

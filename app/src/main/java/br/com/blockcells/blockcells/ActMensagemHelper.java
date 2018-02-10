@@ -2,7 +2,6 @@ package br.com.blockcells.blockcells;
 
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import br.com.blockcells.blockcells.modelo.Mensagem;
 
@@ -28,16 +27,16 @@ public class ActMensagemHelper {
         if (mensagem == null) {
             mensagem = new Mensagem();
         }
-        mensagem.setMensagem(campoMensagem.getText().toString());
-        mensagem.setDescmensagemVIP(campoMensagemVIP.getText().toString());
-        mensagem.setLocalizacao(campoLocalizacao.isChecked());
+        mensagem.setMsg(campoMensagem.getText().toString());
+        mensagem.setMsg_vip(campoMensagemVIP.getText().toString());
+        mensagem.setMsgcomlocalizacao(campoLocalizacao.isChecked());
         return mensagem;
     }
 
     public void preencheMensagem(Mensagem mensagem) {
-        campoMensagem.setText(mensagem.getMensagem());
-        campoMensagemVIP.setText(mensagem.getDescmensagemVIP());
-        campoLocalizacao.setChecked(mensagem.isLocalizacao());
+        campoMensagem.setText(mensagem.getMsg());
+        campoMensagemVIP.setText(mensagem.getMsg_vip());
+        campoLocalizacao.setChecked(mensagem.isMsgcomlocalizacao());
 
         this.mensagem = mensagem;
 

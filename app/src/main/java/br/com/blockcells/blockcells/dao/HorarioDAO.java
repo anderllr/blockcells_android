@@ -30,17 +30,17 @@ public class HorarioDAO {
     @NonNull
     private ContentValues getContentValues(Horario horario) {
         ContentValues dados = new ContentValues();
-        dados.put("usefulMonday", horario.isUsefulMonday());
-        dados.put("usefulTuesday", horario.isUsefulTuesday());
-        dados.put("usefulWednesday", horario.isUsefulWednesday());
-        dados.put("usefulThursday", horario.isUsefulThursday());
-        dados.put("usefulFriday", horario.isUsefulFriday());
-        dados.put("hourUsefulStart", horario.getHourUsefulStart());
-        dados.put("hourUsefulEnd", horario.getHourUsefulEnd());
-        dados.put("weekendSaturday", horario.isWeekendSaturday());
-        dados.put("weekendSunday", horario.isWeekendSunday());
-        dados.put("hourWeekendStart", horario.getHourWeekendStart());
-        dados.put("hourWeekendEnd", horario.getHourWeekendEnd());
+        dados.put("usefulMonday", horario.isSegunda());
+        dados.put("usefulTuesday", horario.isTerca());
+        dados.put("usefulWednesday", horario.isQuarta());
+        dados.put("usefulThursday", horario.isQuinta());
+        dados.put("usefulFriday", horario.isSexta());
+        dados.put("hourUsefulStart", horario.getUtil_inicio());
+        dados.put("hourUsefulEnd", horario.getUtil_fim());
+        dados.put("weekendSaturday", horario.isSabado());
+        dados.put("weekendSunday", horario.isDomingo());
+        dados.put("hourWeekendStart", horario.getFds_inicio());
+        dados.put("hourWeekendEnd", horario.getFds_fim());
         return dados;
     }
 
@@ -55,18 +55,17 @@ public class HorarioDAO {
 
         if (c.getCount() > 0) {
             Horario horario = new Horario();
-            horario.setId(c.getLong(c.getColumnIndex("id")));
-            horario.setUsefulMonday(c.getInt(c.getColumnIndex("usefulMonday")) == 1);
-            horario.setUsefulTuesday(c.getInt(c.getColumnIndex("usefulTuesday")) == 1);
-            horario.setUsefulWednesday(c.getInt(c.getColumnIndex("usefulWednesday")) == 1);
-            horario.setUsefulThursday(c.getInt(c.getColumnIndex("usefulThursday")) == 1);
-            horario.setUsefulFriday(c.getInt(c.getColumnIndex("usefulFriday")) == 1);
-            horario.setHourUsefulStart(c.getString(c.getColumnIndex("hourUsefulStart")));
-            horario.setHourUsefulEnd(c.getString(c.getColumnIndex("hourUsefulEnd")));
-            horario.setWeekendSaturday(c.getInt(c.getColumnIndex("weekendSaturday")) == 1);
-            horario.setWeekendSunday(c.getInt(c.getColumnIndex("weekendSunday")) == 1);
-            horario.setHourWeekendStart(c.getString(c.getColumnIndex("hourWeekendStart")));
-            horario.setHourWeekendEnd(c.getString(c.getColumnIndex("hourWeekendEnd")));
+            horario.setSegunda(c.getInt(c.getColumnIndex("usefulMonday")) == 1);
+            horario.setTerca(c.getInt(c.getColumnIndex("usefulTuesday")) == 1);
+            horario.setQuarta(c.getInt(c.getColumnIndex("usefulWednesday")) == 1);
+            horario.setQuinta(c.getInt(c.getColumnIndex("usefulThursday")) == 1);
+            horario.setSexta(c.getInt(c.getColumnIndex("usefulFriday")) == 1);
+            horario.setUtil_inicio(c.getString(c.getColumnIndex("hourUsefulStart")));
+            horario.setUtil_fim(c.getString(c.getColumnIndex("hourUsefulEnd")));
+            horario.setSabado(c.getInt(c.getColumnIndex("weekendSaturday")) == 1);
+            horario.setDomingo(c.getInt(c.getColumnIndex("weekendSunday")) == 1);
+            horario.setFds_inicio(c.getString(c.getColumnIndex("hourWeekendStart")));
+            horario.setFds_fim(c.getString(c.getColumnIndex("hourWeekendEnd")));
             c.close();
             return horario;
         }
@@ -76,7 +75,7 @@ public class HorarioDAO {
 
     public void deleta(Horario horario) {
 
-        String[] params = {horario.getId().toString()};
+        String[] params = {"1"};
 
         dal.deletaID("Horario", params);
     }
@@ -85,7 +84,7 @@ public class HorarioDAO {
 
         ContentValues dados = getContentValues(horario);
 
-        String[] params = {horario.getId().toString()};
+        String[] params = {"1"};
         dal.alteraID("Horario", dados, params);
     }
 
@@ -96,17 +95,17 @@ public class HorarioDAO {
     public void inserePrimeiro() {
         //No caso dessa tela de configuração sempre iniciará com um registro e ele sempre será editado
         Horario horario = new Horario();
-        horario.setUsefulMonday(true);
-        horario.setUsefulTuesday(true);
-        horario.setUsefulWednesday(true);
-        horario.setUsefulThursday(true);
-        horario.setUsefulFriday(true);
-        horario.setHourUsefulStart("00:00");
-        horario.setHourUsefulEnd("23:59");
-        horario.setWeekendSaturday(true);
-        horario.setWeekendSunday(true);
-        horario.setHourWeekendStart("00:00");
-        horario.setHourWeekendEnd("23:59");
+        horario.setSegunda(true);
+        horario.setTerca(true);
+        horario.setQuarta(true);
+        horario.setQuinta(true);
+        horario.setSexta(true);
+        horario.setUtil_inicio("00:00");
+        horario.setUtil_fim("23:59");
+        horario.setSabado(true);
+        horario.setDomingo(true);
+        horario.setFds_inicio("00:00");
+        horario.setFds_fim("23:59");
         this.insere(horario);
     }
 }

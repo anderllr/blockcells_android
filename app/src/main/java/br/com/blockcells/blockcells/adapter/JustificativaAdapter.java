@@ -60,8 +60,17 @@ public class JustificativaAdapter extends BaseAdapter {
         }
 
         //Converter a data e hora separadamente
-        String data = getDataHora(just.getData_hora(), "D");
-        String hora = getDataHora(just.getData_hora(), "H");
+        //       String data = getDataHora(loggeral.getData_hora(), "D");
+//        String hora = getDataHora(loggeral.getData_hora(), "H");
+
+        String data = "";
+        String hora = "";
+
+        if (just.getData_hora() != null) {
+            String[] arrayData = just.getData_hora().split(" ");
+            data = arrayData[0];
+            hora = arrayData[1];
+        }
 
         //Agora busca os campos para atribuir e deve buscar do xml de layout
         TextView campoData = (TextView) view.findViewById(R.id.jus_data);

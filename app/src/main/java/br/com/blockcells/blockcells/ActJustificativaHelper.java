@@ -35,7 +35,7 @@ public class ActJustificativaHelper {
     }
 
     public void preencheJustificativa(Justificativa jus) {
-        campoDataHora.setText(converteData(jus.getData_hora()));
+        campoDataHora.setText(jus.getData_hora());
         campoEvento.setText(jus.getEvento());
         campoJustificativa.setText(jus.getDesc_justificativa());
 

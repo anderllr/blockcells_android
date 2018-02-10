@@ -30,11 +30,11 @@ public class KilometragemDAO {
     @NonNull
     private ContentValues getContentValues(Kilometragem km) {
         ContentValues dados = new ContentValues();
-        dados.put("kmMinimo", km.getKmMinimo());
-        dados.put("kmMaximo", km.getKmMaximo());
-        dados.put("kmAlerta", km.getKmAlerta());
-        dados.put("ativarBip", km.isAtivarBip());
-        dados.put("enviarAlerta", km.isEnviarAlerta());
+        dados.put("kmMinimo", km.getVelocidade_min());
+        dados.put("kmMaximo", km.getVelocidade_max());
+        dados.put("kmAlerta", km.getVelocidade_alerta());
+        dados.put("ativarBip", km.isEmite_bip());
+        dados.put("enviarAlerta", km.isEnvia_alerta());
 
         return dados;
     }
@@ -50,12 +50,11 @@ public class KilometragemDAO {
 
         if (c.getCount() > 0) {
             Kilometragem km = new Kilometragem();
-            km.setId(c.getLong(c.getColumnIndex("id")));
-            km.setKmMinimo(c.getInt(c.getColumnIndex("kmMinimo")));
-            km.setKmMaximo(c.getInt(c.getColumnIndex("kmMaximo")));
-            km.setKmAlerta(c.getInt(c.getColumnIndex("kmAlerta")));
-            km.setAtivarBip(c.getInt(c.getColumnIndex("ativarBip")) == 1);
-            km.setEnviarAlerta(c.getInt(c.getColumnIndex("enviarAlerta")) == 1);
+            km.setVelocidade_min(c.getInt(c.getColumnIndex("kmMinimo")));
+            km.setVelocidade_max(c.getInt(c.getColumnIndex("kmMaximo")));
+            km.setVelocidade_alerta(c.getInt(c.getColumnIndex("kmAlerta")));
+            km.setEmite_bip(c.getInt(c.getColumnIndex("ativarBip")) == 1);
+            km.setEnvia_alerta(c.getInt(c.getColumnIndex("enviarAlerta")) == 1);
             c.close();
             return km;
         }
@@ -65,7 +64,7 @@ public class KilometragemDAO {
 
     public void deleta(Kilometragem km) {
 
-        String[] params = {km.getId().toString()};
+        String[] params = {"1"};
 
         dal.deletaID("Kilometragem", params);
     }
@@ -73,18 +72,18 @@ public class KilometragemDAO {
     public void altera(Kilometragem km) {
         ContentValues dados = getContentValues(km);
 
-        String[] params = {km.getId().toString()};
+        String[] params = {"1"};
         dal.alteraID("Kilometragem", dados, params);
     }
 
     public void inserePrimeiro() {
         //No caso dessa tela de configuração sempre iniciará com um registro e ele sempre será editado
         Kilometragem km = new Kilometragem();
-        km.setKmMinimo(20);
-        km.setKmMaximo(110);
-        km.setKmAlerta(95);
-        km.setAtivarBip(false);
-        km.setEnviarAlerta(false);
+        km.setVelocidade_min(20);
+        km.setVelocidade_max(110);
+        km.setVelocidade_alerta(95);
+        km.setEmite_bip(false);
+        km.setEnvia_alerta(false);
         this.insere(km);
     }
 

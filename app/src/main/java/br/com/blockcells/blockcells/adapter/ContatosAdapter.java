@@ -19,6 +19,7 @@ import java.util.List;
 import br.com.blockcells.blockcells.ActContatosExcecao;
 import br.com.blockcells.blockcells.R;
 import br.com.blockcells.blockcells.dao.BlockCellsDAL;
+import br.com.blockcells.blockcells.dao.BlockCellsFire;
 import br.com.blockcells.blockcells.dao.ContatosExcecaoDAO;
 import br.com.blockcells.blockcells.modelo.ContatosExcecao;
 
@@ -100,6 +101,10 @@ public class ContatosAdapter extends BaseAdapter {
             @Override
             public void onClick(View view) {
                 ContatosExcecaoDAO ced = new ContatosExcecaoDAO(context);
+
+                BlockCellsFire fire = new BlockCellsFire(context);
+                fire.removeFirebaseChild("contatovip", getChild(contato.getId()));
+
                 ced.deleta(contato);
                 ced.close();
                 contatos.remove(position);
@@ -108,5 +113,21 @@ public class ContatosAdapter extends BaseAdapter {
             }
         });
         return view;
+    }
+
+    private String getChild(Long id) {
+        //função usada para normalizar a string passada para o firebase
+        String child = String.valueOf(id);
+
+        switch(child.length()) {
+            case 1:
+                child = "00" + child;
+                break;
+            case 2:
+                child = "0" + child;
+                break;
+        }
+
+        return child;
     }
 }

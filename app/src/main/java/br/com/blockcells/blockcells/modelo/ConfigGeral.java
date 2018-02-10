@@ -7,42 +7,33 @@ import java.io.Serializable;
  */
 
 public class ConfigGeral implements Serializable {
-    private Long id;
-    private boolean controleRemoto;
-    private boolean informaLocal;
     private boolean ativado;
-    private boolean enviasms;
+    private boolean controle_remoto;
+    private boolean envia_sms;
+    private boolean informa_local;
 
-    public boolean isEnviasms() {
-        return enviasms;
+    public boolean isEnvia_sms() {
+        return envia_sms;
     }
 
-    public void setEnviasms(boolean enviasms) {
-        this.enviasms = enviasms;
+    public void setEnvia_sms(boolean enviasms) {
+        this.envia_sms = envia_sms;
     }
 
-    public Long getId() {
-        return id;
+    public boolean getControle_remoto() {
+        return controle_remoto;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setControle_remoto(boolean controle_remoto) {
+        this.controle_remoto = controle_remoto;
     }
 
-    public boolean getControleRemoto() {
-        return controleRemoto;
+    public boolean getInforma_local() {
+        return informa_local;
     }
 
-    public void setControleRemoto(boolean controleRemoto) {
-        this.controleRemoto = controleRemoto;
-    }
-
-    public boolean getInformaLocal() {
-        return informaLocal;
-    }
-
-    public void setInformaLocal(boolean informaLocal) {
-        this.informaLocal = informaLocal;
+    public void setInforma_local(boolean informa_local) {
+        this.informa_local = informa_local;
     }
 
     public boolean getAtivado() {

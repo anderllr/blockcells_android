@@ -6,6 +6,8 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.support.multidex.MultiDex;
 
+import com.google.firebase.database.FirebaseDatabase;
+
 import br.com.blockcells.blockcells.R;
 import br.com.blockcells.blockcells.dao.ConfigGeralDAO;
 import br.com.blockcells.blockcells.dao.KilometragemDAO;
@@ -27,6 +29,15 @@ public class GlobalSpeed extends Application {
     private PrefSpeed prefSpeed;
     private AudioManager am;
     private static int ringerMode;
+    private String telefone;
+
+    public String getTelefone() {
+        return telefone;
+    }
+
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
+    }
 
     public double getLatitude() {
         return latitude;
@@ -54,6 +65,9 @@ public class GlobalSpeed extends Application {
         am = (AudioManager)this.getSystemService(Context.AUDIO_SERVICE);
 
         ringerMode = -1;
+
+        //Instantiate Firebase and takes persistence enabled
+        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
     }
 
     @Override
@@ -110,12 +124,12 @@ public class GlobalSpeed extends Application {
         daoCfg.close();
 
         if (cfg.getAtivado()) {
-            if (speed > km.getKmAlerta()) {
+            if (speed > km.getVelocidade_alerta()) {
                 MediaPlayer ringAlerta = MediaPlayer.create(this, R.raw.beepblock);
                 ringAlerta.start();
             }
 
-            if (speed > km.getKmMaximo()) {
+            if (speed > km.getVelocidade_max()) {
                 MediaPlayer ring = MediaPlayer.create(this, R.raw.sirene);
                 ring.start();
                 daoLog.insereLog("Excesso de velocidade", "Ultrapassou velocidade permitida", this.latitude, this.longitude);
@@ -123,7 +137,7 @@ public class GlobalSpeed extends Application {
         }
 
         //method that verify if speed is major than minimun limit for block mobile data
-        if (speed > km.getKmMinimo()) {
+        if (speed > km.getVelocidade_min()) {
             //se já foi tratado não mexe mais, isso para não confundir o acesso aos dados duas vezes
             if (prefSpeed.isSpeedChanged())
                 return;

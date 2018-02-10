@@ -1,9 +1,6 @@
 package br.com.blockcells.blockcells.funcs;
 
 import android.content.Context;
-import android.content.Intent;
-import android.util.Log;
-import android.widget.Toast;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -14,7 +11,6 @@ import br.com.blockcells.blockcells.dao.ConfigGeralDAO;
 import br.com.blockcells.blockcells.dao.ContatosExcecaoDAO;
 import br.com.blockcells.blockcells.dao.HorarioDAO;
 import br.com.blockcells.blockcells.dao.KilometragemDAO;
-import br.com.blockcells.blockcells.dao.LogGeralDAO;
 import br.com.blockcells.blockcells.modelo.ConfigGeral;
 import br.com.blockcells.blockcells.modelo.Horario;
 import br.com.blockcells.blockcells.modelo.Kilometragem;
@@ -65,7 +61,7 @@ public class BlockCell {
             daoKM.close();
 
          //   daoLog.insereLog("SPEED: ", String.valueOf(speed));
-            if (km.getKmMinimo() < speed) {
+            if (km.getVelocidade_min() < speed) {
                 blocked = true;
             }
 
@@ -83,25 +79,25 @@ public class BlockCell {
 
                 switch (weekDay) {
                     case 1:
-                        blocked = (hr.isWeekendSunday());
+                        blocked = (hr.isDomingo());
                         break;
                     case 2:
-                        blocked = (hr.isUsefulMonday());
+                        blocked = (hr.isSegunda());
                         break;
                     case 3:
-                        blocked = (hr.isUsefulTuesday());
+                        blocked = (hr.isTerca());
                         break;
                     case 4:
-                        blocked = (hr.isUsefulWednesday());
+                        blocked = (hr.isQuarta());
                         break;
                     case 5:
-                        blocked = (hr.isUsefulThursday());
+                        blocked = (hr.isQuinta());
                         break;
                     case 6:
-                        blocked = (hr.isUsefulFriday());
+                        blocked = (hr.isSexta());
                         break;
                     case 7:
-                        blocked = (hr.isWeekendSaturday());
+                        blocked = (hr.isSabado());
                         break;
                 }
 
@@ -124,8 +120,8 @@ public class BlockCell {
 
                         try {
                 //            Log.i(TAG, "É dia de semana " + dateHour);
-                            start = format.parse(dateHour + "-" + hr.getHourUsefulStart());
-                            end = format.parse(dateHour + "-" + hr.getHourUsefulEnd());
+                            start = format.parse(dateHour + "-" + hr.getUtil_inicio());
+                            end = format.parse(dateHour + "-" + hr.getUtil_fim());
 
                         } catch (ParseException e) {
                         }
@@ -134,8 +130,8 @@ public class BlockCell {
 
                         try {
                   //          Log.i(TAG, "É final de semana " + dateHour);
-                            start = format.parse(dateHour + "-" + hr.getHourWeekendStart());
-                            end = format.parse(dateHour + "-" + hr.getHourWeekendEnd());
+                            start = format.parse(dateHour + "-" + hr.getFds_inicio());
+                            end = format.parse(dateHour + "-" + hr.getFds_fim());
 
                         } catch (ParseException e) {
                         }

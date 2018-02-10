@@ -1,5 +1,6 @@
 package br.com.blockcells.blockcells;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -23,7 +24,6 @@ import android.support.v7.widget.Toolbar;
 import android.support.v4.view.GravityCompat;
 import android.util.Log;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.CompoundButton;
@@ -31,10 +31,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
-import br.com.blockcells.blockcells.dao.BlockCellsDAL;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import br.com.blockcells.blockcells.dao.BlockCellsFire;
 import br.com.blockcells.blockcells.dao.ConfigGeralDAO;
 import br.com.blockcells.blockcells.dao.HorarioDAO;
-import br.com.blockcells.blockcells.dao.JustificativaDAO;
 import br.com.blockcells.blockcells.dao.KilometragemDAO;
 import br.com.blockcells.blockcells.dao.MensagemDAO;
 import br.com.blockcells.blockcells.funcs.BlockService;
@@ -43,15 +48,16 @@ import br.com.blockcells.blockcells.funcs.PrefIntro;
 import br.com.blockcells.blockcells.funcs.PrefTravado;
 import br.com.blockcells.blockcells.modelo.ConfigGeral;
 import br.com.blockcells.blockcells.modelo.Horario;
-import br.com.blockcells.blockcells.modelo.Justificativa;
 import br.com.blockcells.blockcells.modelo.Kilometragem;
 import br.com.blockcells.blockcells.modelo.Mensagem;
+import br.com.blockcells.blockcells.modelo.Solicitacao;
 import me.leolin.shortcutbadger.ShortcutBadger;
 
 public class ActPrincipal extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, LocationListener, GpsStatus.Listener {
 
     private static final int REQUEST_MODIFY_PHONE_STATE = 0;
+    static public final int REQUEST_LOCATION = 1;
     private LocationManager mLocationManager;
     private TextView txtSpeed;
     private PrefIntro prefIntro;
@@ -61,6 +67,9 @@ public class ActPrincipal extends AppCompatActivity
     private TextView count_jus = null;
     private View mInfoNotificationBadge;
     private Context context;
+
+    private FirebaseDatabase database = FirebaseDatabase.getInstance();
+    private DatabaseReference myRef = database.getReference("celulares");
 
     private boolean firstfix;
 //    private GlobalSpeed globalSpeed = (GlobalSpeed) this.getBaseContext();
@@ -100,7 +109,6 @@ public class ActPrincipal extends AppCompatActivity
         }
 
         daoHorario.close();
-
     }
 
     @Override
@@ -174,6 +182,8 @@ public class ActPrincipal extends AppCompatActivity
         mLocationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
         txtSpeed = (TextView) findViewById(R.id.txt_speed);
 
+        //Por enquanto seta o telefone aqui
+        globalSpeed.setTelefone("+5500999991111");
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -200,6 +210,26 @@ public class ActPrincipal extends AppCompatActivity
             @Override
             public void onClick(View view) {
 
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setCancelable(true);
+                builder.setTitle(getResources().getString(R.string.title_permitir_remoto));
+                builder.setMessage(getResources().getString(R.string.msg_permitir));
+                builder.setPositiveButton(getResources().getString(R.string.button_permitir),
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Toast.makeText(ActPrincipal.this, "Permitiu...", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                builder.setNegativeButton(getResources().getString(R.string.button_cancelar), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Toast.makeText(ActPrincipal.this, "Colocou não...", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                AlertDialog dialog = builder.create();
+                dialog.show();
 /*
                 if (globalSpeed.getSpeed() == 80) {
                     globalSpeed.setSpeed(10);
@@ -241,14 +271,102 @@ public class ActPrincipal extends AppCompatActivity
             public void onClick(View v) {
                 //Aqui serão executadas as ações para ir para a tela de justificativa
 
+                if (jus_number > 0) {
+                    abreListaJustificativa();
+                }
 
-                jus_number += 1;
-                updateJustificativa(jus_number);
-                ShortcutBadger.applyCount(context, jus_number);
             }
         });
 
+
+
         return super.onCreateOptionsMenu(menu);
+
+    }
+
+    protected void abreListaJustificativa() {
+        Intent vaiParaJustificativa = new Intent(this, ActListaJustificativa.class);
+        startActivity(vaiParaJustificativa);
+    }
+
+    protected void openListeners() {
+        final GlobalSpeed  globalSpeed = (GlobalSpeed) getApplicationContext();
+        DatabaseReference fireJus = myRef.child(globalSpeed.getTelefone()).child("justificativa");
+
+        fireJus.orderByChild("justificado").equalTo(false).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                updateJustificativa((int) dataSnapshot.getChildrenCount());
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        final BlockCellsFire fire = new BlockCellsFire(getApplicationContext());
+
+        //Agora abre outro listener para o acesso remoto
+        final DatabaseReference fireSol = myRef.child(globalSpeed.getTelefone()).child("solicitacao");
+        fireSol.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.getValue() != null) {
+                    final Solicitacao sol = dataSnapshot.getValue(Solicitacao.class);
+
+                    final ConfigGeralDAO dao = new ConfigGeralDAO(context);
+                    final ConfigGeral c = dao.buscaConfigGeral();
+
+                    //verifica se tem uma solicitação de acesso remoto
+                    if (sol.getAceito()) {
+
+                        if (!c.getControle_remoto()) { //se já estiver sendo controlado remotamente não há o que ajustar
+
+                            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                            builder.setCancelable(true);
+                            builder.setTitle(getResources().getString(R.string.title_permitir_remoto));
+                            builder.setMessage(sol.getNome() + " " + getResources().getString(R.string.msg_permitir));
+                            builder.setPositiveButton(getResources().getString(R.string.button_permitir),
+                                    new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            c.setControle_remoto(true);
+                                            dao.altera(c);
+                                            fire.salvaFirebase(c, "config_geral");
+                                        }
+                                    });
+                            builder.setNegativeButton(getResources().getString(R.string.button_cancelar), new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    c.setControle_remoto(false);
+                                    sol.setAceito(false);
+                                    fire.salvaFirebase(sol, "solicitacao");
+                                    dao.altera(c);
+                                    fire.salvaFirebase(c, "config_geral");
+                                }
+                            });
+
+                            AlertDialog dialog = builder.create();
+                            dialog.show();
+                        }
+
+                    } else {
+                        c.setControle_remoto(false);
+                        dao.altera(c);
+                        fire.salvaFirebase(c, "config_geral");
+                    }
+
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+
 
     }
 
@@ -268,6 +386,9 @@ public class ActPrincipal extends AppCompatActivity
                 }
             }
         });
+
+    //    ShortcutBadger.with(getApplicationContext()).count(jus_number); //for 1.1.3
+        ShortcutBadger.applyCount(getApplicationContext(), jus_number);
     }
 
     @Override
@@ -357,8 +478,7 @@ public class ActPrincipal extends AppCompatActivity
                 startActivity(vaiParaLog);
                 break;
             case R.id.chamaJustificativa:
-                Intent vaiParaJustificativa = new Intent(this, ActListaJustificativa.class);
-                startActivity(vaiParaJustificativa);
+                abreListaJustificativa();
                 break;
             case R.id.chamaControle:
                 Intent vaiParaControle = new Intent(this, ActControle.class);
@@ -405,14 +525,22 @@ public class ActPrincipal extends AppCompatActivity
     protected void onResume() {
         super.onResume();
         firstfix = true;
-        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) !=PackageManager.PERMISSION_GRANTED){// Check Permissions Now
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION);
+        } else{
+            startLocation(); // <-- Start Location here
+        }
+
+        //Agora executa o observe do Firebase que irá atualizar os dados das tabelas
+        BlockCellsFire fire = new BlockCellsFire(getApplicationContext());
+        fire.startRemoteData();
+
+        openListeners();
+    }
+
+    protected void startLocation(){
+        //Double verification because Android studio causes error
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) !=PackageManager.PERMISSION_GRANTED){
             return;
         }
         if (mLocationManager.getAllProviders().indexOf(LocationManager.GPS_PROVIDER) >= 0) {
@@ -430,17 +558,23 @@ public class ActPrincipal extends AppCompatActivity
     }
 
     @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String[] permissions,
+                                           int[] grantResults) {
+        if (requestCode == REQUEST_LOCATION) {
+            if(grantResults.length == 1
+                    && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                startLocation(); // <-- Start Location here
+            } else {
+                // Permission was denied or request was cancelled
+            }
+        }
+    }
+    @Override
     protected void onPause() {
         super.onPause();
 
-        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) !=PackageManager.PERMISSION_GRANTED){
             return;
         }
         mLocationManager.removeUpdates(this);

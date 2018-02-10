@@ -33,9 +33,9 @@ public class MensagemDAO {
     @NonNull
     private ContentValues getContentValues(Mensagem mensagem) {
         ContentValues dados = new ContentValues();
-        dados.put("mensagem", mensagem.getMensagem());
-        dados.put("mensagemVIP", mensagem.getDescmensagemVIP());
-        dados.put("localizacao", mensagem.isLocalizacao());
+        dados.put("mensagem", mensagem.getMsg());
+        dados.put("mensagemVIP", mensagem.getMsg_vip());
+        dados.put("localizacao", mensagem.isMsgcomlocalizacao());
         return dados;
     }
 
@@ -50,10 +50,9 @@ public class MensagemDAO {
 
         if (c.getCount() > 0) {
             Mensagem mensagem = new Mensagem();
-            mensagem.setId(c.getLong(c.getColumnIndex("id")));
-            mensagem.setMensagem(c.getString(c.getColumnIndex("mensagem")));
-            mensagem.setDescmensagemVIP(c.getString(c.getColumnIndex("mensagemVIP")));
-            mensagem.setLocalizacao(c.getInt(c.getColumnIndex("localizacao")) == 1);
+            mensagem.setMsg(c.getString(c.getColumnIndex("mensagem")));
+            mensagem.setMsg_vip(c.getString(c.getColumnIndex("mensagemVIP")));
+            mensagem.setMsgcomlocalizacao(c.getInt(c.getColumnIndex("localizacao")) == 1);
             c.close();
             return mensagem;
         }
@@ -63,7 +62,7 @@ public class MensagemDAO {
 
     public void deleta(Mensagem mensagem) {
 
-        String[] params = {mensagem.getId().toString()};
+        String[] params = {"1"};
 
         dal.deletaID("Mensagem", params);
     }
@@ -72,7 +71,7 @@ public class MensagemDAO {
 
         ContentValues dados = getContentValues(mensagem);
 
-        String[] params = {mensagem.getId().toString()};
+        String[] params = {"1"};
         dal.alteraID("Mensagem", dados, params);
     }
 
@@ -83,9 +82,9 @@ public class MensagemDAO {
     public void inserePrimeiro() {
         //Ever starts with any register for avoid any trouble
         Mensagem msg = new Mensagem();
-        msg.setMensagem(context.getString(R.string.msgDefaultSMS));
-        msg.setDescmensagemVIP(context.getString(R.string.msgDefaultSMSVIP));
-        msg.setLocalizacao(false);
+        msg.setMsg(context.getString(R.string.msgDefaultSMS));
+        msg.setMsg_vip(context.getString(R.string.msgDefaultSMSVIP));
+        msg.setMsgcomlocalizacao(false);
         this.insere(msg);
     }
 }

@@ -7,6 +7,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import br.com.blockcells.blockcells.dao.BlockCellsFire;
 import br.com.blockcells.blockcells.dao.KilometragemDAO;
 import br.com.blockcells.blockcells.modelo.Kilometragem;
 
@@ -47,14 +48,11 @@ public class ActKilometragem extends AppCompatActivity {
                 Kilometragem km = helper.pegaKilometragem();
                 KilometragemDAO dao = new KilometragemDAO(this);
 
-                if (km.getId() != null) {
-                    //significa que está alterando
+                //Save on firebase
+                BlockCellsFire fire = new BlockCellsFire(getApplicationContext());
+                fire.salvaFirebase(km, "km");
 
-                    dao.altera(km);
-                }
-                else {
-                    dao.insere(km);
-                }
+                dao.altera(km);
                 dao.close();
                 Toast.makeText(this, getString(R.string.action_salvar), Toast.LENGTH_SHORT).show();
                 finish();

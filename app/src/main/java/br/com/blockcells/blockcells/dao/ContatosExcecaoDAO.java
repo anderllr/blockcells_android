@@ -34,17 +34,22 @@ public class ContatosExcecaoDAO {
         dal = new BlockCellsDAL(context);
     }
 
-    public void insere(ContatosExcecao ContatosExcecao) {
+    public void insere(ContatosExcecao contatosExcecao) {
 
-        ContentValues dados = getContentValues(ContatosExcecao);
+        ContentValues dados = getContentValues(contatosExcecao);
 
         dal.insere("ContatosExcecao", dados);
 
     }
 
+    public Long getMax() {
+        return dal.buscaMax("ContatosExcecao", "id");
+    }
+
     @NonNull
     private ContentValues getContentValues(ContatosExcecao ContatosExcecao) {
         ContentValues dados = new ContentValues();
+        dados.put("id", ContatosExcecao.getId());
         dados.put("nome", ContatosExcecao.getNome());
         dados.put("fone", ContatosExcecao.getFone());
         dados.put("foneNormalize", ContatosExcecao.getFoneNormalize());
@@ -89,6 +94,11 @@ public class ContatosExcecaoDAO {
         dal.deletaID("ContatosExcecao", params);
 
         //dal.close();
+    }
+
+    public void deleteAll() {
+
+        dal.deletaAll("ContatosExcecao");
     }
 
     public void altera(ContatosExcecao ContatosExcecao) {
