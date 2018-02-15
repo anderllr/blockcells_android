@@ -17,6 +17,7 @@ import br.com.blockcells.blockcells.modelo.ConfigGeral;
 public class ActConfigGeral extends AppCompatActivity {
 
     private ActConfigGeralHelper helper;
+    private Boolean remoteControl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,8 +30,10 @@ public class ActConfigGeral extends AppCompatActivity {
         //Pega a intent que foi usada para abrir o formulário
         Intent intent = getIntent();
         ConfigGeral configGeral = (ConfigGeral) intent.getSerializableExtra("configGeral");
+        remoteControl = false;
 
         if (configGeral != null){
+            remoteControl = configGeral.getControle_remoto();
             helper.preencheConfigGeral(configGeral);
 
         }
@@ -39,7 +42,12 @@ public class ActConfigGeral extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         //método para carregar na tela o layout xml criado para os menus superiores
-        getMenuInflater().inflate(R.menu.menu_confirma, menu);
+        //Verifica se está marcado para apenas controle remoto
+        if (remoteControl) {
+            getMenuInflater().inflate(R.menu.menu_voltar, menu);
+        } else {
+            getMenuInflater().inflate(R.menu.menu_confirma, menu);
+        }
         return true;
     }
 

@@ -77,6 +77,7 @@
     <string name="descTitleTimePicker">Selecione a Hora</string>
 
     <string name="alertContacts">São permitidos apenas 3 (três) contatos de exceção!</string>
+    <string name="alertRemote">Controlado remotamente!</string>
 
     <string name="msgBlockCall">Bloqueio de Ligação</string>
     <string name="msgBlockCallNumber">Número: </string>

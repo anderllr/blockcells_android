@@ -31,6 +31,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -182,8 +183,8 @@ public class ActPrincipal extends AppCompatActivity
         mLocationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
         txtSpeed = (TextView) findViewById(R.id.txt_speed);
 
-        //Por enquanto seta o telefone aqui
-        globalSpeed.setTelefone("+5500999991111");
+        //Pega o telefone autenticado
+        globalSpeed.setTelefone(FirebaseAuth.getInstance().getCurrentUser().getPhoneNumber());
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -323,7 +324,7 @@ public class ActPrincipal extends AppCompatActivity
 
                         if (!c.getControle_remoto()) { //se já estiver sendo controlado remotamente não há o que ajustar
 
-                            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                            AlertDialog.Builder builder = new AlertDialog.Builder(ActPrincipal.this);
                             builder.setCancelable(true);
                             builder.setTitle(getResources().getString(R.string.title_permitir_remoto));
                             builder.setMessage(sol.getNome() + " " + getResources().getString(R.string.msg_permitir));
@@ -357,6 +358,13 @@ public class ActPrincipal extends AppCompatActivity
                         fire.salvaFirebase(c, "config_geral");
                     }
 
+                } else { //se for nulo grava com forma 0
+                    Solicitacao sol = new Solicitacao();
+                    sol.setAceito(false);
+                    sol.setNome("");
+                    sol.setUsername("");
+
+                    fire.salvaFirebase(sol, "solicitacao");
                 }
             }
 
@@ -480,10 +488,10 @@ public class ActPrincipal extends AppCompatActivity
             case R.id.chamaJustificativa:
                 abreListaJustificativa();
                 break;
-            case R.id.chamaControle:
+/*            case R.id.chamaControle:
                 Intent vaiParaControle = new Intent(this, ActControle.class);
                 startActivity(vaiParaControle);
-                break;
+                break; */
             case R.id.chamaWelcome:
                 PrefIntro prefManager = new PrefIntro(getApplicationContext());
 

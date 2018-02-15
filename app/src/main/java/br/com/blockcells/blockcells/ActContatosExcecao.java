@@ -31,7 +31,9 @@ import java.util.Map;
 
 import br.com.blockcells.blockcells.adapter.ContatosAdapter;
 import br.com.blockcells.blockcells.dao.BlockCellsFire;
+import br.com.blockcells.blockcells.dao.ConfigGeralDAO;
 import br.com.blockcells.blockcells.dao.ContatosExcecaoDAO;
+import br.com.blockcells.blockcells.modelo.ConfigGeral;
 import br.com.blockcells.blockcells.modelo.ContatosExcecao;
 
 public class ActContatosExcecao extends AppCompatActivity {
@@ -64,13 +66,19 @@ public class ActContatosExcecao extends AppCompatActivity {
         novo_contato.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //AQUI VAI ABRIR A LISTA DE CONTATOS SE HOUVER MENOS QUE 3
-                if (listaContatos.getCount() < 3) {
-                    showContacts();
-                }
-                else
-                {
-                    Snackbar.make(view, getString(R.string.alertContacts), Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                //Verifica se está marcado para apenas controle remoto
+                ConfigGeralDAO dao = new ConfigGeralDAO(ActContatosExcecao.this);
+                ConfigGeral cfg = dao.buscaConfigGeral();
+
+                if (cfg.getControle_remoto()) {
+                    Snackbar.make(view, getString(R.string.alertRemote), Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                } else {
+                    //AQUI VAI ABRIR A LISTA DE CONTATOS SE HOUVER MENOS QUE 3
+                    if (listaContatos.getCount() < 3) {
+                        showContacts();
+                    } else {
+                        Snackbar.make(view, getString(R.string.alertContacts), Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                    }
                 }
 
             }

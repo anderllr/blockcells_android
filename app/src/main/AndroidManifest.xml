@@ -108,7 +108,8 @@
             android:name=".funcs.BadgeIntentService"
             android:exported="false" />
 
-        <activity android:name=".ActPrincipal"></activity>
+        <activity android:name=".ActPrincipal"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

@@ -22,6 +22,7 @@ public class PhoneNumberAuthentication extends AppCompatActivity {
             startActivity(new Intent(PhoneNumberAuthentication.this, ActPrincipal.class));
             finish();
         } else {
+
             // not signed in
             startActivityForResult(
                     AuthUI.getInstance()
@@ -34,6 +35,8 @@ public class PhoneNumberAuthentication extends AppCompatActivity {
                     RC_SIGN_IN);
         }
     }
+
+
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         // RC_SIGN_IN is the request code you passed into startActivityForResult(...) when starting the sign in flow.

@@ -20,7 +20,9 @@ import br.com.blockcells.blockcells.ActContatosExcecao;
 import br.com.blockcells.blockcells.R;
 import br.com.blockcells.blockcells.dao.BlockCellsDAL;
 import br.com.blockcells.blockcells.dao.BlockCellsFire;
+import br.com.blockcells.blockcells.dao.ConfigGeralDAO;
 import br.com.blockcells.blockcells.dao.ContatosExcecaoDAO;
+import br.com.blockcells.blockcells.modelo.ConfigGeral;
 import br.com.blockcells.blockcells.modelo.ContatosExcecao;
 
 /**
@@ -100,15 +102,23 @@ public class ContatosAdapter extends BaseAdapter {
         retirarContato.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ContatosExcecaoDAO ced = new ContatosExcecaoDAO(context);
 
-                BlockCellsFire fire = new BlockCellsFire(context);
-                fire.removeFirebaseChild("contatovip", getChild(contato.getId()));
+                ConfigGeralDAO dao = new ConfigGeralDAO(context);
+                ConfigGeral cfg = dao.buscaConfigGeral();
 
-                ced.deleta(contato);
-                ced.close();
-                contatos.remove(position);
-                notifyDataSetChanged();
+                if (cfg.getControle_remoto()) {
+                    Snackbar.make(view, context.getString(R.string.alertRemote), Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                } else {
+                    ContatosExcecaoDAO ced = new ContatosExcecaoDAO(context);
+
+                    BlockCellsFire fire = new BlockCellsFire(context);
+                    fire.removeFirebaseChild("contatovip", getChild(contato.getId()));
+
+                    ced.deleta(contato);
+                    ced.close();
+                    contatos.remove(position);
+                    notifyDataSetChanged();
+                }
 
             }
         });

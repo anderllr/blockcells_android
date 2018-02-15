@@ -8,7 +8,9 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import br.com.blockcells.blockcells.dao.BlockCellsFire;
+import br.com.blockcells.blockcells.dao.ConfigGeralDAO;
 import br.com.blockcells.blockcells.dao.KilometragemDAO;
+import br.com.blockcells.blockcells.modelo.ConfigGeral;
 import br.com.blockcells.blockcells.modelo.Kilometragem;
 
 public class ActKilometragem extends AppCompatActivity {
@@ -36,7 +38,14 @@ public class ActKilometragem extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         //método para carregar na tela o layout xml criado para os menus superiores
-        getMenuInflater().inflate(R.menu.menu_confirma, menu);
+        //Verifica se está marcado para apenas controle remoto
+        ConfigGeralDAO dao = new ConfigGeralDAO(this);
+        ConfigGeral cfg = dao.buscaConfigGeral();
+        if (cfg.getControle_remoto()) {
+            getMenuInflater().inflate(R.menu.menu_voltar, menu);
+        } else {
+            getMenuInflater().inflate(R.menu.menu_confirma, menu);
+        }
         return true;
     }
 

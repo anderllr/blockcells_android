@@ -35,11 +35,11 @@
 
     <item android:title="@string/navigation_drawer_divisor">
         <menu>
-
+            <!--
             <item
                 android:id="@+id/chamaControle"
                 android:icon="@drawable/ic_usuario"
-                android:title="@string/configControle" />
+                android:title="@string/configControle" /> -->
 
             <item
                 android:id="@+id/chamaWelcome"

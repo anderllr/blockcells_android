@@ -10,7 +10,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import br.com.blockcells.blockcells.funcs.GlobalSpeed;
 import br.com.blockcells.blockcells.modelo.ConfigGeral;
@@ -42,33 +44,45 @@ public class BlockCellsFire extends ContextWrapper{
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
+                ConfigGeralDAO dao = new ConfigGeralDAO(getBaseContext());
+                ConfigGeral configGeral = dao.buscaConfigGeral();
                 if (dataSnapshot.hasChild("config_geral")) {
-                    ConfigGeralDAO dao = new ConfigGeralDAO(getBaseContext());
-                    ConfigGeral configGeral = dataSnapshot.child("config_geral").getValue(ConfigGeral.class);
+                     configGeral = dataSnapshot.child("config_geral").getValue(ConfigGeral.class);
                     dao.altera(configGeral);
+                } else {
+                    salvaFirebase(configGeral, "config_geral");
                 }
 
+                HorarioDAO daoHorario = new HorarioDAO(getBaseContext());
+                Horario horario = daoHorario.buscaHorario();
                 if (dataSnapshot.hasChild("horario")) {
-                    HorarioDAO daoHorario = new HorarioDAO(getBaseContext());
-                    Horario horario = dataSnapshot.child("horario").getValue(Horario.class);
+                    horario = dataSnapshot.child("horario").getValue(Horario.class);
                     daoHorario.altera(horario);
+                } else {
+                    salvaFirebase(horario, "horario");
                 }
 
+                KilometragemDAO daoKM  = new KilometragemDAO(getBaseContext());
+                Kilometragem km = daoKM.buscaKilometragem();
                 if (dataSnapshot.hasChild("km")) {
-                    KilometragemDAO daoKM  = new KilometragemDAO(getBaseContext());
-                    Kilometragem km = dataSnapshot.child("km").getValue(Kilometragem.class);
+                    km = dataSnapshot.child("km").getValue(Kilometragem.class);
                     daoKM.altera(km);
+                } else {
+                    salvaFirebase(km, "km");
                 }
+
+                MensagemDAO daoMsg = new MensagemDAO(getBaseContext());
+                Mensagem msg = daoMsg.buscaMensagem();
 
                 if (dataSnapshot.hasChild("mensagem_retorno")) {
-                    MensagemDAO daoMsg = new MensagemDAO(getBaseContext());
-                    Mensagem msg = dataSnapshot.child("mensagem_retorno").getValue(Mensagem.class);
+                    msg = dataSnapshot.child("mensagem_retorno").getValue(Mensagem.class);
                     daoMsg.altera(msg);
+                } else {
+                    salvaFirebase(msg, "msg");
                 }
 
+                ContatosExcecaoDAO cDao = new ContatosExcecaoDAO(getBaseContext());
                 if (dataSnapshot.hasChild("contatovip")) {
-
-                    ContatosExcecaoDAO cDao = new ContatosExcecaoDAO(getBaseContext());
                     cDao.deleteAll();
 
                     for (DataSnapshot dados: dataSnapshot.child("contatovip").getChildren()) {
@@ -76,6 +90,17 @@ public class BlockCellsFire extends ContextWrapper{
                         con.setId(Long.valueOf(dados.getKey()));
                         cDao.insere(con);
                     }
+                } else { //vai inserir
+
+                    List<ContatosExcecao> contatos = cDao.buscaContatosExcecao();
+                    for (ContatosExcecao con: contatos) {
+                        Map<String, String> values = new HashMap<String, String>();
+                        values.put("nome", con.getNome());
+                        values.put("fone", con.getFone());
+
+                        salvaFirebaseChild(values, "contatosvip", getChild(con.getId()));
+                    }
+
 
                 }
             }
@@ -86,6 +111,23 @@ public class BlockCellsFire extends ContextWrapper{
             }
         });
     }
+
+    private String getChild(Long id) {
+        //função usada para normalizar a string passada para o firebase
+        String child = String.valueOf(id);
+
+        switch(child.length()) {
+            case 1:
+                child = "00" + child;
+                break;
+            case 2:
+                child = "0" + child;
+                break;
+        }
+
+        return child;
+    }
+
 
     public void salvaFirebase (Object obj, String node) {
         final GlobalSpeed  globalSpeed = (GlobalSpeed) getApplicationContext();
