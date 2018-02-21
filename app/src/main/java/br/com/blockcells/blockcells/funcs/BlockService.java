@@ -46,47 +46,6 @@ public class BlockService extends Service {
         LocationListener locationListener = new LocationListener() {
 
             public void onLocationChanged(Location location) {
-              /*  Double lat = location.getLatitude();
-                Double lon = location.getLongitude();
-                double Radius = EARTH_RADIUS;
-                Float spTest = location.getSpeed();
-
-                String speed = "0";
-                String speedTest = String.valueOf((int) (spTest * 3.6));
-                Toast.makeText(getBaseContext(), "Lat.: " + lat + " Long.: " + lon, Toast.LENGTH_SHORT).show();
-                Toast.makeText(getBaseContext(), "Lat. Ant: " + latAnt + " Long. Ant: " + lonAnt, Toast.LENGTH_SHORT).show();
-                //speed = String.valueOf((int) ((location.getSpeed()*3600)/1000));
-                if (latAnt != 0) {
-
-                    double dLat = Math.toRadians(lat - latAnt);
-                    double dLon = Math.toRadians(lon - lonAnt);
-                    double a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-                            Math.cos(Math.toRadians(latAnt)) * Math.cos(Math.toRadians(lat)) *
-                                    Math.sin(dLon / 2) * Math.sin(dLon / 2);
-                    double c = 2 * Math.asin(Math.sqrt(a));
-                    speed = String.valueOf((int) (((Radius * c) * 3.6)));
-                }
-                //   Toast.makeText(ActPrincipal.this, "Current speed:" + speed, Toast.LENGTH_SHORT).show();
-                //   Toast.makeText(ActPrincipal.this, "Mudou... Lat.: " + String.valueOf(lat) + " - Ant.: " + String.valueOf(latAnt), Toast.LENGTH_SHORT).show();
-                //    speed = btnSpeed.getText().toString();
-
-                //  speed = String.valueOf(Integer.parseInt(speed) + 1);
-                if (Integer.parseInt(speed) < 200) {
-                    //  btnSpeed.setText(speed);
-
-                    if (Integer.parseInt(speed) > 3) {
-                        globalSpeed.setSpeed(Integer.parseInt(speed));
-                    }
-                }
-
-             //   Toast.makeText(getBaseContext(), "Speed: " + speed, Toast.LENGTH_SHORT).show();
-               // Toast.makeText(getBaseContext(), "Speed Test: " + speedTest + " | " + spTest, Toast.LENGTH_SHORT).show();
-                if ((lonAnt == lon) && (latAnt == lat)) {
-                    Toast.makeText(getBaseContext(), "Tá igual...", Toast.LENGTH_SHORT).show();
-                }
-
-                latAnt = lat;
-                lonAnt = lon; */
 
                 //calcul manually speed
                 double speed = 0;

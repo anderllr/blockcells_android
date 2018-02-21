@@ -17,7 +17,7 @@ public class ConfigGeral implements Serializable {
     }
 
     public void setEnvia_sms(boolean enviasms) {
-        this.envia_sms = envia_sms;
+        this.envia_sms = enviasms;
     }
 
     public boolean getControle_remoto() {

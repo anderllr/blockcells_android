@@ -85,10 +85,10 @@ public class ConfigGeralDAO {
     public void inserePrimeiro() {
         //No caso dessa tela de configuração sempre iniciará com um registro e ele sempre será editado
         ConfigGeral configGeral = new ConfigGeral();
-        configGeral.setAtivado(false);
+        configGeral.setAtivado(true);
         configGeral.setControle_remoto(false);
-        configGeral.setInforma_local(false);
-        configGeral.setEnvia_sms(false);
+        configGeral.setInforma_local(true);
+        configGeral.setEnvia_sms(true);
         this.insere(configGeral);
     }
 

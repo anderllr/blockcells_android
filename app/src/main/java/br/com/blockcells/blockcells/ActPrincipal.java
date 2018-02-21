@@ -59,12 +59,15 @@ public class ActPrincipal extends AppCompatActivity
 
     private static final int REQUEST_MODIFY_PHONE_STATE = 0;
     static public final int REQUEST_LOCATION = 1;
+    static final Integer CALL = 0x2;
+    static final Integer SMS = 0x3;
     private LocationManager mLocationManager;
     private TextView txtSpeed;
     private PrefIntro prefIntro;
     private PrefTravado prefTravado;
     public static ToggleButton btnTravar;
     private int jus_number = 0;
+    private int velocidade = 0;
     private TextView count_jus = null;
     private View mInfoNotificationBadge;
     private Context context;
@@ -211,36 +214,22 @@ public class ActPrincipal extends AppCompatActivity
             @Override
             public void onClick(View view) {
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                builder.setCancelable(true);
-                builder.setTitle(getResources().getString(R.string.title_permitir_remoto));
-                builder.setMessage(getResources().getString(R.string.msg_permitir));
-                builder.setPositiveButton(getResources().getString(R.string.button_permitir),
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                Toast.makeText(ActPrincipal.this, "Permitiu...", Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                builder.setNegativeButton(getResources().getString(R.string.button_cancelar), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Toast.makeText(ActPrincipal.this, "Colocou não...", Toast.LENGTH_SHORT).show();
-                    }
-                });
+                /*if (velocidade < 20) {
+                    velocidade = 20;
+                } else if (velocidade > 60) {
+                    velocidade = 61;
+                }
+                if ((velocidade%2)==0) {
+                    velocidade += 2;
+                } else {
+                    int velo = velocidade;
+                    velo -= 3;
+                    if ((velo%2)==0) {velo -=1;};
+                    velocidade = velo;
+                }
+                globalSpeed.setSpeed(velocidade);
+                txtSpeed.setText(String.valueOf(velocidade));*/
 
-                AlertDialog dialog = builder.create();
-                dialog.show();
-/*
-                if (globalSpeed.getSpeed() == 80) {
-                    globalSpeed.setSpeed(10);
-                    txtSpeed.setText("10");
-                }
-                else {
-                    globalSpeed.setSpeed(80);
-                    txtSpeed.setText("80");
-                }
-*/
             }
         });
     }
@@ -539,6 +528,12 @@ public class ActPrincipal extends AppCompatActivity
             startLocation(); // <-- Start Location here
         }
 
+        //Permissão para SMS
+        requestSmsPermission();
+
+        //Permissão para Telefone
+        requestCallPermission();
+
         //Agora executa o observe do Firebase que irá atualizar os dados das tabelas
         BlockCellsFire fire = new BlockCellsFire(getApplicationContext());
         fire.startRemoteData();
@@ -666,5 +661,18 @@ public class ActPrincipal extends AppCompatActivity
 
     @Override
     public void onProviderDisabled(String s) {}
+
+    //PERMISSIONS
+    private void requestSmsPermission() {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS) !=PackageManager.PERMISSION_GRANTED) {// Check Permissions Now
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.SEND_SMS}, SMS);
+        }
+    }
+
+    private void requestCallPermission(){
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) !=PackageManager.PERMISSION_GRANTED) {// Check Permissions Now
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CALL_PHONE}, CALL);
+        }
+    }
 }
 

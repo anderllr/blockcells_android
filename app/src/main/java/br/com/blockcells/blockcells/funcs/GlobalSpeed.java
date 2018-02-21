@@ -30,6 +30,8 @@ public class GlobalSpeed extends Application {
     private AudioManager am;
     private static int ringerMode;
     private String telefone;
+    private boolean ringAlert;
+    private boolean ringAlarm;
 
     public String getTelefone() {
         return telefone;
@@ -124,16 +126,28 @@ public class GlobalSpeed extends Application {
         daoCfg.close();
 
         if (cfg.getAtivado()) {
-            if (speed > km.getVelocidade_alerta()) {
-                MediaPlayer ringAlerta = MediaPlayer.create(this, R.raw.beepblock);
-                ringAlerta.start();
-            }
-
             if (speed > km.getVelocidade_max()) {
-                MediaPlayer ring = MediaPlayer.create(this, R.raw.sirene);
-                ring.start();
-                daoLog.insereLog("Excesso de velocidade", "Ultrapassou velocidade permitida", this.latitude, this.longitude);
+                if (!ringAlarm) {
+                    MediaPlayer ring = MediaPlayer.create(this, R.raw.sirene);
+                    ring.start();
+                    daoLog.insereLog("Excesso de Velocidade", "Ultrapassou velocidade permitida", this.latitude, this.longitude);
+                    ringAlarm = true;
+                }
             }
+            else
+                if (speed > km.getVelocidade_alerta()) {
+                    ringAlarm = false;
+                    if (!ringAlert) {
+                        MediaPlayer ringAlerta = MediaPlayer.create(this, R.raw.beepblock);
+                        ringAlerta.start();
+                        ringAlert = true;
+                    }
+                } else {
+                    ringAlert = false;
+                    ringAlarm = false;
+                }
+
+
         }
 
         //method that verify if speed is major than minimun limit for block mobile data
