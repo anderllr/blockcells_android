@@ -58,7 +58,7 @@ public class ActMensagem extends AppCompatActivity {
 
                 //Save on firebase
                 BlockCellsFire fire = new BlockCellsFire(getApplicationContext());
-                fire.salvaFirebase(mensagem, "mensagem_retorno");
+                fire.salvaFirebase(mensagem, "msg");
 
                 dao.altera(mensagem);
                 dao.close();

@@ -3,6 +3,8 @@ package br.com.blockcells.blockcells;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.PixelFormat;
+import android.net.Uri;
 import android.os.Build;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -17,6 +19,8 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.support.v4.view.PagerAdapter;
+import android.widget.Toast;
+import android.widget.VideoView;
 
 import br.com.blockcells.blockcells.funcs.PrefIntro;
 
@@ -92,6 +96,13 @@ public class WelcomeActivity extends AppCompatActivity {
                 }
             }
         });
+
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
     }
 
     private void addBottomDots(int currentPage) {
@@ -125,6 +136,18 @@ public class WelcomeActivity extends AppCompatActivity {
 
     //  viewpager change listener
     ViewPager.OnPageChangeListener viewPagerPageChangeListener = new ViewPager.OnPageChangeListener() {
+        private VideoView blockVideo;
+
+        private void configVideo() {
+            getWindow().setFormat(PixelFormat.UNKNOWN);
+            //displays a video file
+            blockVideo = (VideoView)findViewById(R.id.videoBlock);
+            String uriPath2 = "android.resource://br.com.blockcells.blockcells/" + R.raw.blockcells_android;
+            Uri uri2 = Uri.parse(uriPath2);
+            blockVideo.setVideoURI(uri2);
+            blockVideo.requestFocus();
+            blockVideo.start();
+        }
 
         @Override
         public void onPageSelected(int position) {
@@ -139,6 +162,21 @@ public class WelcomeActivity extends AppCompatActivity {
                 // still pages are left
                 btnNext.setText(getString(R.string.next));
                 btnSkip.setVisibility(View.VISIBLE);
+            }
+
+            switch (position) {
+                case 0:
+                    if (blockVideo.isPlaying()) {
+                        blockVideo.stopPlayback();
+                    }
+                    break;
+                case 1:
+                    configVideo();
+
+                    break;
+                case 2:
+                    blockVideo.stopPlayback();
+                    break;
             }
         }
 

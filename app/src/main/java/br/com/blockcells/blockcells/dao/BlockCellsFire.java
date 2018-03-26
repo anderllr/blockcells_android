@@ -74,8 +74,8 @@ public class BlockCellsFire extends ContextWrapper{
                 MensagemDAO daoMsg = new MensagemDAO(getBaseContext());
                 Mensagem msg = daoMsg.buscaMensagem();
 
-                if (dataSnapshot.hasChild("mensagem_retorno")) {
-                    msg = dataSnapshot.child("mensagem_retorno").getValue(Mensagem.class);
+                if (dataSnapshot.hasChild("msg")) {
+                    msg = dataSnapshot.child("msg").getValue(Mensagem.class);
                     daoMsg.altera(msg);
                 } else {
                     salvaFirebase(msg, "msg");
@@ -98,7 +98,7 @@ public class BlockCellsFire extends ContextWrapper{
                         values.put("nome", con.getNome());
                         values.put("fone", con.getFone());
 
-                        salvaFirebaseChild(values, "contatosvip", getChild(con.getId()));
+                        salvaFirebaseChild(values, "contatovip", getChild(con.getId()));
                     }
 
 

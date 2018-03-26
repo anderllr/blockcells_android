@@ -178,8 +178,6 @@ public class ActPrincipal extends AppCompatActivity
             }
         });
 
-
-
         //get global variable of speed
         final GlobalSpeed globalSpeed = (GlobalSpeed) getApplicationContext();
 
@@ -187,7 +185,8 @@ public class ActPrincipal extends AppCompatActivity
         txtSpeed = (TextView) findViewById(R.id.txt_speed);
 
         //Pega o telefone autenticado
-        globalSpeed.setTelefone(FirebaseAuth.getInstance().getCurrentUser().getPhoneNumber());
+       // globalSpeed.setTelefone(FirebaseAuth.getInstance().getCurrentUser().getPhoneNumber());
+        globalSpeed.setTelefone("+5500999991111");
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(

@@ -89,7 +89,7 @@ public class ActContatosExcecao extends AppCompatActivity {
     }
 
     /**
-     * Show the contacts in the ListView.
+     * Show contacts in the ListView.
      */
     private void showContacts() {
         // Check the SDK version and whether the permission is already granted or not.

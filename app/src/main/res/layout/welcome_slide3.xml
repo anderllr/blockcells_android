@@ -4,23 +4,47 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/bg_screen">
 
-    <ImageView
-        android:id="@+id/imgSlider3"
+    <TextView
+        android:id="@+id/textView6"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scaleType="fitXY"
-        android:src="@drawable/slider3" />
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="21dp"
+        android:text="BlockCells"
+        android:textColor="#2475BC"
+        android:textSize="20dp"
+        android:textAlignment="center"
+        android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/ImageViewText"
-        android:layout_width="130dp"
+        android:id="@+id/textView7"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/imgSlider3"
-        android:layout_alignTop="@+id/imgSlider3"
-        android:layout_alignBottom="@+id/imgSlider3"
-        android:text="@string/textSlider3"
-        android:gravity="bottom"
-        android:paddingLeft="10dp"
-        android:paddingBottom="60dp"
-        android:textSize="20sp"/>
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/textView6"
+        android:layout_marginTop="20dp"
+        android:padding="15dp"
+        android:text="Obrigado por escolher o BlockCells, clique no botão abaixo para ser direcionado à autenticação do App."
+        android:textAlignment="center"
+        android:textColor="#2475BC"
+        android:textSize="18dp" />
+
+    <TextView
+        android:id="@+id/textView9"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/textView7"
+        android:layout_marginTop="154dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:text="www.blockcells.com.br"
+        android:textAlignment="center"
+        android:textColor="#2475BC"
+        android:textSize="14dp" />
+
+
 </RelativeLayout>

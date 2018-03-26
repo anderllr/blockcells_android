@@ -1,25 +1,59 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@color/bg_screen">
-
-    <ImageView
-        android:id="@+id/imgSlider1"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scaleType="fitXY"
-        android:src="@drawable/slider1" />
+    android:background="@drawable/background">
 
     <TextView
-        android:id="@+id/ImageViewText"
-        android:layout_width="150dp"
+        android:id="@+id/textView6"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/imgSlider1"
-        android:layout_alignTop="@+id/imgSlider1"
-        android:layout_alignBottom="@+id/imgSlider1"
-        android:text="@string/textSlider1"
-        android:gravity="center"
-        android:paddingLeft="10dp"
-        android:textSize="20dp" />
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="21dp"
+        android:text="Bem vindo ao BlockCells"
+        android:textColor="#2475BC"
+        android:textSize="20dp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/textView7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/textView6"
+        android:layout_marginTop="20dp"
+        android:padding="15dp"
+        android:text="O App que o ajudará a cuidar de sua segurança, protegendo você e sua família."
+        android:textAlignment="center"
+        android:textColor="#2475BC"
+        android:textSize="18dp" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="220dp"
+        android:layout_height="74dp"
+        android:layout_alignBottom="@+id/textView9"
+        android:layout_alignEnd="@+id/textView6"
+        android:layout_alignRight="@+id/textView6"
+        android:layout_marginBottom="40dp"
+        app:srcCompat="@drawable/blockcells_horizontal" />
+
+    <TextView
+        android:id="@+id/textView9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="55dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:text="* Você está vendo esta tela pois é o seu primeiro acesso, um vídeo será mostrado a seguir para te orientar"
+        android:textAlignment="center"
+        android:textColor="#2475BC"
+        android:textSize="14dp" />
+
 </RelativeLayout>
